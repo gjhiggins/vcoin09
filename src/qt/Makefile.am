@@ -127,6 +127,7 @@ QT_MOC_CPP = \
   moc_optionsmodel.cpp \
   moc_overviewpage.cpp \
   moc_paymentserver.cpp \
+  moc_qcustomplot.cpp \
   moc_qvalidatedlineedit.cpp \
   moc_qvaluecombobox.cpp \
   moc_receivecoinsdialog.cpp \
@@ -191,6 +192,7 @@ BITCOIN_QT_H = \
   overviewpage.h \
   paymentrequestplus.h \
   paymentserver.h \
+  qcustomplot.h \
   qvalidatedlineedit.h \
   qvaluecombobox.h \
   receivecoinsdialog.h \
@@ -274,6 +276,7 @@ BITCOIN_QT_CPP = \
   notificator.cpp \
   optionsdialog.cpp \
   optionsmodel.cpp \
+  qcustomplot.cpp \
   qvalidatedlineedit.cpp \
   qvaluecombobox.cpp \
   rpcconsole.cpp \

@@ -41,9 +41,9 @@ static const int MAX_PAYMENT_REQUEST_SIZE = 50000; // bytes
 /* Number of frames in spinner animation */
 #define SPINNER_FRAMES 35
 
-#define QAPP_ORG_NAME "Zetacoin"
+#define QAPP_ORG_NAME "VCoin"
 #define QAPP_ORG_DOMAIN "zeta-coin.org"
-#define QAPP_APP_NAME_DEFAULT "Zetacoin-Qt"
-#define QAPP_APP_NAME_TESTNET "Zetacoin-Qt-testnet"
+#define QAPP_APP_NAME_DEFAULT "VCoin-Qt"
+#define QAPP_APP_NAME_TESTNET "VCoin-Qt-testnet"
 
 #endif // GUICONSTANTS_H

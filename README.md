@@ -1,4 +1,4 @@
-Zetacoin integration/staging tree
+VCoin integration/staging tree
 =================================
 
 http://www.zeta-coin.org
@@ -7,24 +7,24 @@ https://bitcointalk.org/index.php?topic=267545.0
 
 Copyright (c) 2009-2013 Bitcoin Developers
 
-Copyright (c) 2013-2014 Zetacoin Developers
+Copyright (c) 2013-2014 VCoin Developers
 
-What is Zetacoin?
+What is VCoin?
 -----------------
 
-Zetacoin is an experimental new digital currency that enables instant payments to
-anyone, anywhere in the world. Zetacoin uses peer-to-peer technology to operate
+VCoin is an experimental new digital currency that enables instant payments to
+anyone, anywhere in the world. VCoin uses peer-to-peer technology to operate
 with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Zetacoin Core is the name of open source
+out collectively by the network. VCoin Core is the name of open source
 software which enables the use of this currency.
 
 For more information, as well as an immediately useable, binary version of
-the Zetacoin Core software, see http://www.bitcoin.org/en/download.
+the VCoin Core software, see http://www.bitcoin.org/en/download.
 
 License
 -------
 
-Zetacoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
+VCoin Core is released under the terms of the MIT license. See [COPYING](COPYING) for more
 information or see http://opensource.org/licenses/MIT.
 
 Development process
@@ -33,7 +33,7 @@ Development process
 Developers work in their own trees, then submit pull requests when they think
 their feature or bug fix is ready.
 
-If it is a simple/trivial/non-controversial change, then one of the Zetacoin
+If it is a simple/trivial/non-controversial change, then one of the VCoin
 development team members simply pulls it.
 
 If it is a *more complicated or potentially controversial* change, then the patch
@@ -47,7 +47,7 @@ controversial.
 
 The `master` branch is regularly built and tested, but is not guaranteed to be
 completely stable. [Tags](https://github.com/bitcoin/bitcoin/tags) are created
-regularly to indicate new official, stable release versions of Zetacoin.
+regularly to indicate new official, stable release versions of VCoin.
 
 Testing
 -------
@@ -65,7 +65,7 @@ submit new unit tests for old code. Unit tests can be compiled and run (assuming
 Every pull request is built for both Windows and Linux on a dedicated server,
 and unit and sanity tests are automatically run. The binaries produced may be
 used for manual QA testing — a link to them will appear in a comment on the
-pull request posted by [ZetacoinPullTester](https://github.com/ZetacoinPullTester). See https://github.com/TheBlueMatt/test-scripts
+pull request posted by [VCoinPullTester](https://github.com/VCoinPullTester). See https://github.com/TheBlueMatt/test-scripts
 for the build/test scripts.
 
 ### Manual Quality Assurance (QA) Testing
@@ -104,7 +104,7 @@ that run in -regest mode.
 
 **DEBUG_LOCKORDER**
 
-Zetacoin Core is a multithreaded application, and deadlocks or other multithreading bugs
+VCoin Core is a multithreaded application, and deadlocks or other multithreading bugs
 can be very difficult to track down. Compiling with -DDEBUG_LOCKORDER (configure
 CXXFLAGS="-DDEBUG_LOCKORDER -g") inserts run-time checks to keep track of what locks
 are held, and adds warning to the debug.log file if inconsistencies are detected.

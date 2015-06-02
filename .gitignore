@@ -4,11 +4,11 @@
 src/*.exe
 src/qt/*.exe
 
-src/zetacoin
-src/zetacoind
-src/zetacoin-cli
-src/test/test_zetacoin
-src/qt/test/test_zetacoin-qt
+src/vcoin
+src/vcoind
+src/vcoin-cli
+src/test/test_vcoin
+src/qt/test/test_vcoin-qt
 
 Makefile.in
 aclocal.m4
@@ -39,7 +39,7 @@ src/qt/test/moc*.cpp
 *.o
 *.o-*
 *.patch
-.zetacoin
+.vcoin
 *.a
 *.pb.cc
 *.pb.h
@@ -54,12 +54,12 @@ src/qt/test/moc*.cpp
 # Compilation and Qt preprocessor part
 *.qm
 Makefile
-zetacoin-qt
-Zetacoin-Qt.app
+vcoin-qt
+VCoin-Qt.app
 
 # Unit-tests
 Makefile.test
-zetacoin-qt_test
+vcoin-qt_test
 
 # Resources cpp
 qrc_*.cpp

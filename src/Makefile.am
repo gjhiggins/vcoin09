@@ -13,11 +13,11 @@ endif
 bin_PROGRAMS =
 
 if BUILD_BITCOIND
-  bin_PROGRAMS += zetacoind
+  bin_PROGRAMS += vcoind
 endif
 
 if BUILD_BITCOIN_CLI
-  bin_PROGRAMS += zetacoin-cli
+  bin_PROGRAMS += vcoin-cli
 endif
 
 SUBDIRS = . $(BUILD_QT) $(BUILD_TEST)
@@ -149,35 +149,35 @@ nodist_libbitcoin_common_a_SOURCES = $(top_srcdir)/src/obj/build.h
 #
 
 # bitcoind binary #
-zetacoind_LDADD = \
+vcoind_LDADD = \
   libbitcoin_server.a \
   libbitcoin_cli.a \
   libbitcoin_common.a \
   $(LIBLEVELDB) \
   $(LIBMEMENV)
 if ENABLE_WALLET
-zetacoind_LDADD += libbitcoin_wallet.a
+vcoind_LDADD += libbitcoin_wallet.a
 endif
-zetacoind_SOURCES = bitcoind.cpp
+vcoind_SOURCES = bitcoind.cpp
 #
 
 if TARGET_WINDOWS
-zetacoind_SOURCES += bitcoind-res.rc
+vcoind_SOURCES += bitcoind-res.rc
 endif
 
 AM_CPPFLAGS += $(BDB_CPPFLAGS)
-zetacoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
+vcoind_LDADD += $(BOOST_LIBS) $(BDB_LIBS)
 
 # bitcoin-cli binary #
-zetacoin_cli_LDADD = \
+vcoin_cli_LDADD = \
   libbitcoin_cli.a \
   libbitcoin_common.a \
   $(BOOST_LIBS)
-zetacoin_cli_SOURCES = bitcoin-cli.cpp
+vcoin_cli_SOURCES = bitcoin-cli.cpp
 #
 
 if TARGET_WINDOWS
-zetacoin_cli_SOURCES += bitcoin-cli-res.rc
+vcoin_cli_SOURCES += bitcoin-cli-res.rc
 endif
 
 # NOTE: This dependency is not strictly necessary, but without it make may try to build both in parallel, which breaks the LevelDB build system in a race

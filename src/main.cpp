@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin developers
-// Copyright (c) 2013-2014 Zetacoin developers
+// Copyright (c) 2013-2014 VCoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -28,7 +28,7 @@ using namespace std;
 using namespace boost;
 
 #if defined(NDEBUG)
-# error "Zetacoin cannot be compiled without assertions."
+# error "VCoin cannot be compiled without assertions."
 #endif
 
 //
@@ -69,7 +69,7 @@ map<uint256, set<uint256> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Zetacoin Signed Message:\n";
+const string strMessageMagic = "VCoin Signed Message:\n";
 
 // Internal stuff
 namespace {

@@ -63,7 +63,7 @@ bool AppInit(int argc, char* argv[])
         //
         // Parameters
         //
-        // If Qt is used, parameters/zetacoin.conf are parsed in qt/bitcoin.cpp's main()
+        // If Qt is used, parameters/vcoin.conf are parsed in qt/bitcoin.cpp's main()
         ParseParameters(argc, argv);
         if (!boost::filesystem::is_directory(GetDataDir(false)))
         {
@@ -86,13 +86,13 @@ bool AppInit(int argc, char* argv[])
         if (mapArgs.count("-?") || mapArgs.count("--help"))
         {
             // First part of help message is specific to bitcoind / RPC client
-            std::string strUsage = _("Zetacoin Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n\n" +
+            std::string strUsage = _("VCoin Core Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n\n" +
                 _("Usage:") + "\n" +
-                  "  zetacoind [options]                     " + _("Start Zetacoin Core Daemon") + "\n" +
-                _("Usage (deprecated, use zetacoin-cli):") + "\n" +
-                  "  zetacoind [options] <command> [params]  " + _("Send command to Zetacoin Core") + "\n" +
-                  "  zetacoind [options] help                " + _("List commands") + "\n" +
-                  "  zetacoind [options] help <command>      " + _("Get help for a command") + "\n";
+                  "  vcoind [options]                     " + _("Start VCoin Core Daemon") + "\n" +
+                _("Usage (deprecated, use vcoin-cli):") + "\n" +
+                  "  vcoind [options] <command> [params]  " + _("Send command to VCoin Core") + "\n" +
+                  "  vcoind [options] help                " + _("List commands") + "\n" +
+                  "  vcoind [options] help <command>      " + _("Get help for a command") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_BITCOIND);
             strUsage += "\n" + HelpMessageCli(false);
@@ -104,7 +104,7 @@ bool AppInit(int argc, char* argv[])
         // Command-line RPC
         bool fCommandLine = false;
         for (int i = 1; i < argc; i++)
-            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "zetacoin:"))
+            if (!IsSwitchChar(argv[i][0]) && !boost::algorithm::istarts_with(argv[i], "vcoin:"))
                 fCommandLine = true;
 
         if (fCommandLine)
@@ -116,7 +116,7 @@ bool AppInit(int argc, char* argv[])
         fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon)
         {
-            fprintf(stdout, "Zetacoin server starting\n");
+            fprintf(stdout, "VCoin server starting\n");
 
             // Daemonize
             pid_t pid = fork();

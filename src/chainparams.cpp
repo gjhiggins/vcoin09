@@ -68,10 +68,10 @@ public:
         vSeeds.push_back(CDNSSeedData("seed6.zeta-coin.org", "seed6.zeta-coin.org"));
         vSeeds.push_back(CDNSSeedData("seed7.zeta-coin.org", "seed7.zeta-coin.org"));
         vSeeds.push_back(CDNSSeedData("seed8.zeta-coin.org", "seed8.zeta-coin.org"));
-        vSeeds.push_back(CDNSSeedData("albs1.zetacoinseed.com", "albs1.zetacoinseed.com"));
-        vSeeds.push_back(CDNSSeedData("albs2.zetacoinseed.com", "albs2.zetacoinseed.com"));
-        vSeeds.push_back(CDNSSeedData("albs3.zetacoinseed.com", "albs3.zetacoinseed.com"));
-        vSeeds.push_back(CDNSSeedData("albs4.zetacoinseed.com", "albs4.zetacoinseed.com"));
+        vSeeds.push_back(CDNSSeedData("albs1.vcoinseed.com", "albs1.vcoinseed.com"));
+        vSeeds.push_back(CDNSSeedData("albs2.vcoinseed.com", "albs2.vcoinseed.com"));
+        vSeeds.push_back(CDNSSeedData("albs3.vcoinseed.com", "albs3.vcoinseed.com"));
+        vSeeds.push_back(CDNSSeedData("albs4.vcoinseed.com", "albs4.vcoinseed.com"));
 
         base58Prefixes[PUBKEY_ADDRESS] = list_of(80);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(9);

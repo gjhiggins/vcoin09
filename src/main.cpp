@@ -53,7 +53,7 @@ unsigned int nCoinCacheSize = 5000;
 /** Fees smaller than this (in satoshi) are considered zero fee (for transaction creation) */
 int64_t CTransaction::nMinTxFee = 10000;  // Override with -mintxfee
 /** Fees smaller than this (in satoshi) are considered zero fee (for relaying and mining) */
-int64_t CTransaction::nMinRelayTxFee = 1000;
+int64_t CTransaction::nMinRelayTxFee = 10000;
 
 struct COrphanBlock {
     uint256 hashBlock;
@@ -1179,7 +1179,7 @@ void static PruneOrphanBlocks()
     mapOrphanBlocks.erase(hash);
 }
 
-static const int64_t nStartSubsidy = 1000 * COIN;
+static const int64_t nStartSubsidy = 50 * COIN;
 static const int64_t nMinSubsidy = 1 * COIN;
 
 int64_t GetBlockValue(int nHeight, int64_t nFees)
@@ -1201,15 +1201,15 @@ int64_t GetBlockValue(int nHeight, int64_t nFees)
 }
 
 
-static const int64_t nTargetTimespan = 2 * 60; // 2 minutes
+static const int64_t nTargetTimespan = 1200; // 20 minutes
 static const int64_t nTargetSpacing = 30; // 30 seconds
-static const int64_t nInterval = nTargetTimespan / nTargetSpacing; // 4 blocks
+static const int64_t nInterval = nTargetTimespan / nTargetSpacing; // 40 blocks
 
-static const int64_t nAveragingInterval = nInterval * 20; // 80 blocks
+static const int64_t nAveragingInterval = nInterval * 20; // 40 blocks
 static const int64_t nAveragingTargetTimespan = nAveragingInterval * nTargetSpacing; // 40 minutes
 
-static const int64_t nMaxAdjustDown = 20; // 20% adjustment down
-static const int64_t nMaxAdjustUp = 1; // 1% adjustment up
+static const int64_t nMaxAdjustDown = 28; // 28% adjustment down
+static const int64_t nMaxAdjustUp = 18; // 18% adjustment up
 
 static const int64_t nTargetTimespanAdjDown = nTargetTimespan * (100 + nMaxAdjustDown) / 100;
 

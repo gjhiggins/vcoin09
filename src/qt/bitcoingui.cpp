@@ -14,6 +14,7 @@
 #include "optionsmodel.h"
 #include "rpcconsole.h"
 #include "utilitydialog.h"
+#include "chatwindow.h"
 #ifdef ENABLE_WALLET
 #include "walletframe.h"
 #include "walletmodel.h"
@@ -70,7 +71,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     prevBlocks(0),
     spinnerFrame(0)
 {
-    GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
+    GUIUtil::restoreWindowGeometry("nWindow", QSize(780, 480), this);
 
     QString windowTitle = tr("VCoin Core") + " - ";
 #ifdef ENABLE_WALLET
@@ -254,6 +255,11 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
+	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
+	chatAction->setToolTip(tr("View chat"));
+	chatAction->setCheckable(true);
+	tabGroup->addAction(chatAction);
+
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -265,6 +271,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
+	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -335,6 +342,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
+	    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     }
 #endif
 }
@@ -395,6 +403,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
+		toolbar->addAction(chatAction);
         overviewAction->setChecked(true);
     }
 }
@@ -598,6 +607,12 @@ void BitcoinGUI::gotoMiningPage()
 {
     miningAction->setChecked(true);
     if (walletFrame) walletFrame->gotoMiningPage();
+}
+
+void BitcoinGUI::gotoChatPage()
+{
+    chatAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoChatPage();
 }
 
 void BitcoinGUI::gotoSendCoinsPage(QString addr)

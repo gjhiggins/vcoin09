@@ -88,6 +88,7 @@ QT_FORMS_UI = \
   forms/aboutdialog.ui \
   forms/addressbookpage.ui \
   forms/askpassphrasedialog.ui \
+  forms/chatwindow.ui \
   forms/coincontroldialog.ui \
   forms/editaddressdialog.ui \
   forms/helpmessagedialog.ui \
@@ -112,6 +113,7 @@ QT_MOC_CPP = \
   moc_bitcoinamountfield.cpp \
   moc_bitcoingui.cpp \
   moc_bitcoinunits.cpp \
+  moc_chatwindow.cpp \
   moc_clientmodel.cpp \
   moc_coincontroldialog.cpp \
   moc_coincontroltreewidget.cpp \
@@ -138,6 +140,7 @@ QT_MOC_CPP = \
   moc_rpcconsole.cpp \
   moc_sendcoinsdialog.cpp \
   moc_sendcoinsentry.cpp \
+  moc_serveur.cpp \
   moc_signverifymessagedialog.cpp \
   moc_splashscreen.cpp \
   moc_trafficgraphwidget.cpp \
@@ -176,6 +179,7 @@ BITCOIN_QT_H = \
   bitcoinamountfield.h \
   bitcoingui.h \
   bitcoinunits.h \
+  chatwindow.h \
   clientmodel.h \
   coincontroldialog.h \
   coincontroltreewidget.h \
@@ -204,6 +208,7 @@ BITCOIN_QT_H = \
   rpcconsole.h \
   sendcoinsdialog.h \
   sendcoinsentry.h \
+  serveur.h \
   signverifymessagedialog.h \
   splashscreen.h \
   trafficgraphwidget.h \
@@ -227,6 +232,7 @@ RES_ICONS = \
   res/icons/vcoin.png \
   res/icons/vcoin_testnet.ico \
   res/icons/vcoin_testnet.png \
+  res/icons/chat.png \
   res/icons/clock1.png \
   res/icons/clock2.png \
   res/icons/clock3.png \
@@ -248,6 +254,9 @@ RES_ICONS = \
   res/icons/key.png \
   res/icons/lock_closed.png \
   res/icons/lock_open.png \
+  res/icons/mining.png \
+  res/icons/mining_active.png \
+  res/icons/mining_inactive.png \
   res/icons/overview.png \
   res/icons/qrcode.png \
   res/icons/quit.png \
@@ -272,6 +281,7 @@ BITCOIN_QT_CPP = \
   bitcoinamountfield.cpp \
   bitcoingui.cpp \
   bitcoinunits.cpp \
+  chatwindow.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
   guiutil.cpp \
@@ -302,11 +312,13 @@ BITCOIN_QT_CPP += \
   overviewpage.cpp \
   paymentrequestplus.cpp \
   paymentserver.cpp \
+  qcustomplot.cpp \
   receivecoinsdialog.cpp \
   receiverequestdialog.cpp \
   recentrequeststablemodel.cpp \
   sendcoinsdialog.cpp \
   sendcoinsentry.cpp \
+  serveur.cpp \
   signverifymessagedialog.cpp \
   transactiondesc.cpp \
   transactiondescdialog.cpp \

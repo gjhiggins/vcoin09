@@ -16,6 +16,7 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class MiningPage;
+class ChatWindow;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -54,6 +55,7 @@ public:
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
+	ChatWindow *chatWindow;
 
     OverviewPage *overviewPage;
     QWidget *transactionsPage;
@@ -70,6 +72,8 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+    /** Switch to chat page */
+    void gotoChatPage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */

@@ -66,6 +66,10 @@ static const int DEFAULT_SCRIPTCHECK_THREADS = 0;
 static const int MAX_BLOCKS_IN_TRANSIT_PER_PEER = 128;
 /** Timeout in seconds before considering a block download peer unresponsive. */
 static const unsigned int BLOCK_DOWNLOAD_TIMEOUT = 60;
+/** Default for -usepercenthashpower, for not mining on full power. **/
+static const unsigned int DEFAULT_USE_PERCENT_HASH_POWER = 100;
+/** Default for -usepok, for mining with proof of knowledge for 10% higher rewards. **/
+static const bool DEFAULT_USE_POK = true;
 
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;

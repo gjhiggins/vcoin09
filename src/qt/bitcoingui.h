@@ -19,6 +19,7 @@ class RPCConsole;
 class SendCoinsRecipient;
 class WalletFrame;
 class WalletModel;
+class MiningPage;
 
 class CWallet;
 
@@ -94,6 +95,10 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
     QAction *showHelpMessageAction;
+    QAction *miningAction;
+#ifdef Q_OS_OSX
+    QAction *closeAction;
+#endif
 
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
@@ -164,6 +169,8 @@ private slots:
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
+    /** Switch to mining page */
+    void gotoMiningPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");
@@ -182,6 +189,10 @@ private slots:
 #ifndef Q_OS_MAC
     /** Handle tray icon clicked */
     void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+#endif
+
+#ifdef Q_OS_MAC
+    inline bool closeIfActive() { return this->isActiveWindow() ? close() : false; }
 #endif
 
     /** Show window if hidden, unminimize when minimized, rise when obscured or show if hidden and fToggleHidden is true */

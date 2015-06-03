@@ -92,6 +92,7 @@ QT_FORMS_UI = \
   forms/editaddressdialog.ui \
   forms/helpmessagedialog.ui \
   forms/intro.ui \
+  forms/miningpage.ui \
   forms/openuridialog.ui \
   forms/optionsdialog.ui \
   forms/overviewpage.ui \
@@ -120,6 +121,7 @@ QT_MOC_CPP = \
   moc_intro.cpp \
   moc_macdockiconhandler.cpp \
   moc_macnotificationhandler.cpp \
+  moc_miningpage.cpp \
   moc_monitoreddatamapper.cpp \
   moc_notificator.cpp \
   moc_openuridialog.cpp \
@@ -184,6 +186,7 @@ BITCOIN_QT_H = \
   intro.h \
   macdockiconhandler.h \
   macnotificationhandler.h \
+  miningpage.h \
   monitoreddatamapper.h \
   notificator.h \
   openuridialog.h \
@@ -260,7 +263,8 @@ RES_ICONS = \
   res/icons/tx_inout.png \
   res/icons/tx_input.png \
   res/icons/tx_output.png \
-  res/icons/tx_mined.png
+  res/icons/tx_mined.png \
+  res/icons/tx_mined2.png
 
 BITCOIN_QT_CPP = \
   bitcoin.cpp \
@@ -293,6 +297,7 @@ BITCOIN_QT_CPP += \
   coincontroldialog.cpp \
   coincontroltreewidget.cpp \
   editaddressdialog.cpp \
+  miningpage.cpp \
   openuridialog.cpp \
   overviewpage.cpp \
   paymentrequestplus.cpp \

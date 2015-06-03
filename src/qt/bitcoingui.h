@@ -19,6 +19,7 @@ class RPCConsole;
 class SendCoinsRecipient;
 class WalletFrame;
 class WalletModel;
+class BlockExplorer;
 class MiningPage;
 
 class CWallet;
@@ -94,6 +95,7 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
+    QAction *openBlockExplorerAction;
     QAction *showHelpMessageAction;
     QAction *miningAction;
 #ifdef Q_OS_OSX
@@ -103,6 +105,7 @@ private:
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
+    BlockExplorer* blockExplorer;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;

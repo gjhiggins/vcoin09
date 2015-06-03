@@ -14,6 +14,7 @@
 #include "optionsmodel.h"
 #include "rpcconsole.h"
 #include "utilitydialog.h"
+#include "blockexplorer.h"
 #ifdef ENABLE_WALLET
 #include "walletframe.h"
 #include "walletmodel.h"
@@ -67,6 +68,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     trayIcon(0),
     notificator(0),
     rpcConsole(0),
+    blockExplorer(0),
     prevBlocks(0),
     spinnerFrame(0)
 {
@@ -191,6 +193,9 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     // prevents an oben debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
+    blockExplorer = new BlockExplorer(this);
+    connect(openBlockExplorerAction, SIGNAL(triggered()), blockExplorer, SLOT(show()));
+
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
     this->installEventFilter(this);
 
@@ -312,6 +317,9 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     usedReceivingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Receiving addresses..."), this);
     usedReceivingAddressesAction->setStatusTip(tr("Show the list of used receiving addresses and labels"));
 
+    openBlockExplorerAction = new QAction(QIcon(":/icons/explorer"), tr("Blockchain Explorer"), this);
+    openBlockExplorerAction->setStatusTip(tr("Open blockchain explorer"));
+
     openAction = new QAction(QApplication::style()->standardIcon(QStyle::SP_FileIcon), tr("Open &URI..."), this);
     openAction->setStatusTip(tr("Open a vcoin: URI or payment request"));
 
@@ -382,6 +390,7 @@ void BitcoinGUI::createMenuBar()
     help->addSeparator();
     help->addAction(aboutAction);
     help->addAction(aboutQtAction);
+    help->addAction(openBlockExplorerAction);
 }
 
 void BitcoinGUI::createToolBars()
@@ -522,6 +531,7 @@ void BitcoinGUI::createTrayIconMenu()
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(optionsAction);
     trayIconMenu->addAction(openRPCConsoleAction);
+    trayIconMenu->addAction(openBlockExplorerAction);
 #ifndef Q_OS_MAC // This is built-in on Mac
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(quitAction);

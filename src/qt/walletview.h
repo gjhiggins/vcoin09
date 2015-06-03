@@ -16,6 +16,7 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class MiningPage;
+class tradingDialog;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -33,7 +34,7 @@ class WalletView : public QStackedWidget
     Q_OBJECT
 
 public:
-    explicit WalletView(QWidget *parent);
+    explicit WalletView(QWidget *parent, BitcoinGUI *_gui);
     ~WalletView();
 
     void setBitcoinGUI(BitcoinGUI *gui);
@@ -59,7 +60,8 @@ private:
     QWidget *transactionsPage;
     ReceiveCoinsDialog *receiveCoinsPage;
     SendCoinsDialog *sendCoinsPage;
-    MiningPage * miningPage;
+    MiningPage *miningPage;
+    tradingDialog *tradingPage;
 
     TransactionView *transactionView;
 
@@ -70,6 +72,8 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+    /** Switch to trading page */
+    void gotoTradingPage();	
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */

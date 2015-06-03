@@ -16,6 +16,7 @@
 class ClientModel;
 class Notificator;
 class RPCConsole;
+class TradingPage;
 class SendCoinsRecipient;
 class WalletFrame;
 class WalletModel;
@@ -68,7 +69,7 @@ protected:
 private:
     ClientModel *clientModel;
     WalletFrame *walletFrame;
-
+    TradingPage *tradingPage;
     QLabel *labelEncryptionIcon;
     QLabel *labelConnectionsIcon;
     QLabel *labelBlocksIcon;
@@ -76,6 +77,7 @@ private:
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
+	QAction *tradeAction;
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
@@ -165,6 +167,9 @@ private slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+    /** Switch to Trading Page */
+    void gotoTradingPage(); 
+	
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */

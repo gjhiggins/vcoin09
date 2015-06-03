@@ -102,6 +102,7 @@ QT_FORMS_UI = \
   forms/sendcoinsdialog.ui \
   forms/sendcoinsentry.ui \
   forms/signverifymessagedialog.ui \
+  forms/tradingdialog.ui \
   forms/transactiondescdialog.ui
 
 QT_MOC_CPP = \
@@ -117,6 +118,7 @@ QT_MOC_CPP = \
   moc_coincontroltreewidget.cpp \
   moc_csvmodelwriter.cpp \
   moc_editaddressdialog.cpp \
+  moc_tradingdialog.cpp \
   moc_guiutil.cpp \
   moc_intro.cpp \
   moc_macdockiconhandler.cpp \
@@ -206,6 +208,7 @@ BITCOIN_QT_H = \
   sendcoinsentry.h \
   signverifymessagedialog.h \
   splashscreen.h \
+  tradingdialog.h \
   trafficgraphwidget.h \
   transactiondesc.h \
   transactiondescdialog.h \
@@ -248,6 +251,7 @@ RES_ICONS = \
   res/icons/key.png \
   res/icons/lock_closed.png \
   res/icons/lock_open.png \
+  res/icons/trade.png \
   res/icons/overview.png \
   res/icons/qrcode.png \
   res/icons/quit.png \
@@ -285,6 +289,7 @@ BITCOIN_QT_CPP = \
   qvaluecombobox.cpp \
   rpcconsole.cpp \
   splashscreen.cpp \
+  tradingdialog.cpp \
   trafficgraphwidget.cpp \
   utilitydialog.cpp \
   winshutdownmonitor.cpp
@@ -308,6 +313,7 @@ BITCOIN_QT_CPP += \
   sendcoinsdialog.cpp \
   sendcoinsentry.cpp \
   signverifymessagedialog.cpp \
+  tradingdialog.cpp \
   transactiondesc.cpp \
   transactiondescdialog.cpp \
   transactionfilterproxy.cpp \

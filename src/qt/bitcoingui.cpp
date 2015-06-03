@@ -14,6 +14,7 @@
 #include "optionsmodel.h"
 #include "rpcconsole.h"
 #include "utilitydialog.h"
+#include "tradingpage.h"
 #ifdef ENABLE_WALLET
 #include "walletframe.h"
 #include "walletmodel.h"
@@ -254,6 +255,13 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
+	tradeAction = new QAction(QIcon(":/icons/trade"), tr("&Trade"), this);
+ 	tradeAction->setStatusTip(tr("Currency exchange"));
+	tradeAction->setToolTip(tradeAction->statusTip());
+	tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+	tradeAction->setCheckable(true);
+	tabGroup->addAction(tradeAction);
+
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -265,6 +273,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
+	connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -335,6 +344,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
+	    connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
     }
 #endif
 }
@@ -373,6 +383,9 @@ void BitcoinGUI::createMenuBar()
     }
     settings->addAction(optionsAction);
 
+    QMenu *network = appMenuBar->addMenu(tr("&Trading"));
+    network->addAction(tradeAction);
+
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
     {
@@ -395,6 +408,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
+		toolbar->addAction(tradeAction);
         overviewAction->setChecked(true);
     }
 }
@@ -598,6 +612,12 @@ void BitcoinGUI::gotoMiningPage()
 {
     miningAction->setChecked(true);
     if (walletFrame) walletFrame->gotoMiningPage();
+}
+
+void BitcoinGUI::gotoTradingPage()
+{
+    tradeAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoTradingPage();
 }
 
 void BitcoinGUI::gotoSendCoinsPage(QString addr)

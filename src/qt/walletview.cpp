@@ -3,7 +3,6 @@
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
 #include "walletview.h"
-
 #include "addressbookpage.h"
 #include "askpassphrasedialog.h"
 #include "bitcoingui.h"
@@ -14,10 +13,12 @@
 #include "receivecoinsdialog.h"
 #include "sendcoinsdialog.h"
 #include "signverifymessagedialog.h"
+#include "tradingpage.h"
 #include "transactiontablemodel.h"
 #include "transactionview.h"
 #include "walletmodel.h"
 #include "miningpage.h"
+#include "tradingdialog.h"
 
 #include "ui_interface.h"
 
@@ -31,11 +32,13 @@
 
 WalletView::WalletView(QWidget *parent):
     QStackedWidget(parent),
+    gui(_gui),
     clientModel(0),
     walletModel(0)
 {
     // Create tabs
     overviewPage = new OverviewPage();
+	tradingPage = new TradingPage(this);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -55,12 +58,14 @@ WalletView::WalletView(QWidget *parent):
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
     miningPage = new MiningPage();
+    tradingPage = new tradingDialog(gui);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
     addWidget(miningPage);
+	addWidget(tradingPage);
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
@@ -163,6 +168,11 @@ void WalletView::gotoOverviewPage()
 void WalletView::gotoHistoryPage()
 {
     setCurrentWidget(transactionsPage);
+}
+
+void WalletView::gotoTradingPage()
+{
+    setCurrentWidget(tradingPage);
 }
 
 void WalletView::gotoReceiveCoinsPage()

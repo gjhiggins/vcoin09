@@ -89,6 +89,7 @@ QT_FORMS_UI = \
   forms/addressbookpage.ui \
   forms/askpassphrasedialog.ui \
   forms/chatwindow.ui \
+  forms/blockbrowser.ui \
   forms/coincontroldialog.ui \
   forms/editaddressdialog.ui \
   forms/helpmessagedialog.ui \
@@ -114,6 +115,7 @@ QT_MOC_CPP = \
   moc_bitcoingui.cpp \
   moc_bitcoinunits.cpp \
   moc_chatwindow.cpp \
+  moc_blockbrowser.cpp \
   moc_clientmodel.cpp \
   moc_coincontroldialog.cpp \
   moc_coincontroltreewidget.cpp \
@@ -180,6 +182,7 @@ BITCOIN_QT_H = \
   bitcoingui.h \
   bitcoinunits.h \
   chatwindow.h \
+  blockbrowser.h \
   clientmodel.h \
   coincontroldialog.h \
   coincontroltreewidget.h \
@@ -248,6 +251,7 @@ RES_ICONS = \
   res/icons/edit.png \
   res/icons/editcopy.png \
   res/icons/editpaste.png \
+  res/icons/explorer.png \
   res/icons/export.png \
   res/icons/filesave.png \
   res/icons/history.png \
@@ -282,6 +286,7 @@ BITCOIN_QT_CPP = \
   bitcoingui.cpp \
   bitcoinunits.cpp \
   chatwindow.cpp \
+  blockbrowser.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
   guiutil.cpp \
@@ -304,6 +309,7 @@ BITCOIN_QT_CPP += \
   addressbookpage.cpp \
   addresstablemodel.cpp \
   askpassphrasedialog.cpp \
+  blockbrowser.cpp \
   coincontroldialog.cpp \
   coincontroltreewidget.cpp \
   editaddressdialog.cpp \

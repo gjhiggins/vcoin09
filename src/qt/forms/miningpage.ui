@@ -240,6 +240,7 @@
      <property name="font">
       <font>
        <family>Monaco</family>
+       <pointsize>10</pointsize>
       </font>
      </property>
      <property name="styleSheet">

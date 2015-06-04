@@ -353,7 +353,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QFrame" name="diffplotframe">
+        <widget class="QFrame" name="hashplotframe">
          <property name="frameShape">
           <enum>QFrame::StyledPanel</enum>
          </property>
@@ -376,7 +376,7 @@
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_3">
             <item>
-             <widget class="QCustomPlot" name="diffplot" native="true">
+             <widget class="QCustomPlot" name="hashplot" native="true">
               <property name="minimumSize">
                <size>
                 <width>450</width>

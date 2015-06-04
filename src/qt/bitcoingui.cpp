@@ -71,7 +71,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     prevBlocks(0),
     spinnerFrame(0)
 {
-    GUIUtil::restoreWindowGeometry("nWindow", QSize(850, 550), this);
+    // GUIUtil::restoreWindowGeometry("nWindow", QSize(780, 480), this);
 
     QString windowTitle = tr("VCoin Core") + " - ";
 #ifdef ENABLE_WALLET
@@ -241,24 +241,24 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
+    historyAction = new QAction(QIcon(":/icons/history"), tr("&Transx"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
     historyAction->setCheckable(true);
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
-    miningAction = new QAction(QIcon(":/icons/tx_mined2"), tr("&Mining"), this);
-    miningAction->setStatusTip(tr("Mine new Dropcoin"));
+    miningAction = new QAction(QIcon(":/icons/tx_mined2"), tr("&Mine"), this);
+    miningAction->setStatusTip(tr("Mine new VCoin"));
     miningAction->setToolTip(miningAction->statusTip());
     miningAction->setCheckable(true);
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
 	tradeAction = new QAction(QIcon(":/icons/trade"), tr("&Trade"), this);
- 	tradeAction->setStatusTip(tr("Currency exchange"));
+ 	tradeAction->setStatusTip(tr("Trading via Bleutrade"));
 	tradeAction->setToolTip(tradeAction->statusTip());
-	tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+	tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
 	tradeAction->setCheckable(true);
 	tabGroup->addAction(tradeAction);
 

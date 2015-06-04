@@ -32,6 +32,16 @@ double getBlockHardness(int64_t height)
     return dDiff;
 }
 
+int getBlockHashrate(int height)
+{
+    int64_t lookup = height;
+
+    double timeDiff = getBlockTime(height) - getBlockTime(1);
+    double timePerBlock = timeDiff / lookup;
+
+    return (boost::uint64_t)(((qlonglong)getBlockHardness(height) * pow(2.0, 32)) / timePerBlock);
+}
+
 const CBlockIndex* getBlockIndex(int64_t height)
 {
     std::string hex = getBlockHash(height);
@@ -43,8 +53,8 @@ std::string getBlockHash(int64_t Height)
 {
 	
 	CBlockIndex* pindexBest = mapBlockIndex[chainActive.Tip()->GetBlockHash()];
-    if(Height > pindexBest->nHeight) { return ""; }
-    if(Height < 0) { return ""; }
+    if(Height > pindexBest->nHeight) { return "00000b7e804f0de87e7752550ff04d7686a4599509897feefd7f03904eb45633"; }
+    if(Height < 0) { return "00000b7e804f0de87e7752550ff04d7686a4599509897feefd7f03904eb45633"; }
     int64_t desiredheight;
     desiredheight = Height;
     if (desiredheight < 0 || desiredheight > pindexBest->nHeight)
@@ -204,7 +214,7 @@ std::string getOutputs(std::string txid)
         str.append(addressStr);
         str.append(": ");
         str.append(amount);
-        str.append(" DGC");
+        str.append(" VCN");
         str.append("\n");
     }
 
@@ -248,7 +258,7 @@ std::string getInputs(std::string txid)
         str.append(inputStr);
         str.append(": ");
         str.append(amount);
-        str.append(" DGC");
+        str.append(" VCN");
         str.append("\n");
     }
 
@@ -322,7 +332,7 @@ BlockBrowser::BlockBrowser(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    setFixedSize(400, 420);
+    setFixedSize(780, 480);
 
     connect(ui->blockButton, SIGNAL(pressed()), this, SLOT(blockClicked()));
     connect(ui->txButton, SIGNAL(pressed()), this, SLOT(txClicked()));
@@ -430,11 +440,11 @@ void BlockBrowser::updateExplorer(bool block)
         QString QOutputs = QString::fromUtf8(outputs.c_str());
         QString QInputs = QString::fromUtf8(inputs.c_str());
         QString QFees = QString::number(fees, 'f', 6);
-        ui->valueBox->setText(QValue + " DGC");
+        ui->valueBox->setText(QValue + " VCN");
         ui->txID->setText(QID);
         ui->outputBox->setText(QOutputs);
         ui->inputBox->setText(QInputs);
-        ui->feesBox->setText(QFees + " DGC");
+        ui->feesBox->setText(QFees + " VCN");
     }
 }
 

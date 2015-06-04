@@ -71,7 +71,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     prevBlocks(0),
     spinnerFrame(0)
 {
-    GUIUtil::restoreWindowGeometry("nWindow", QSize(780, 480), this);
+    // GUIUtil::restoreWindowGeometry("nWindow", QSize(780, 480), this);
 
     QString windowTitle = tr("VCoin Core") + " - ";
 #ifdef ENABLE_WALLET

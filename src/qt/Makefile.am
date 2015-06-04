@@ -88,7 +88,7 @@ QT_FORMS_UI = \
   forms/aboutdialog.ui \
   forms/addressbookpage.ui \
   forms/askpassphrasedialog.ui \
-  forms/blockexplorer.ui \
+  forms/blockbrowser.ui \
   forms/coincontroldialog.ui \
   forms/editaddressdialog.ui \
   forms/helpmessagedialog.ui \
@@ -113,7 +113,7 @@ QT_MOC_CPP = \
   moc_bitcoinamountfield.cpp \
   moc_bitcoingui.cpp \
   moc_bitcoinunits.cpp \
-  moc_blockexplorer.cpp \
+  moc_blockbrowser.cpp \
   moc_clientmodel.cpp \
   moc_coincontroldialog.cpp \
   moc_coincontroltreewidget.cpp \
@@ -178,7 +178,7 @@ BITCOIN_QT_H = \
   bitcoinamountfield.h \
   bitcoingui.h \
   bitcoinunits.h \
-  blockexplorer.h \
+  blockbrowser.h \
   clientmodel.h \
   coincontroldialog.h \
   coincontroltreewidget.h \
@@ -276,7 +276,7 @@ BITCOIN_QT_CPP = \
   bitcoinamountfield.cpp \
   bitcoingui.cpp \
   bitcoinunits.cpp \
-  blockexplorer.cpp \
+  blockbrowser.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
   guiutil.cpp \
@@ -299,7 +299,7 @@ BITCOIN_QT_CPP += \
   addressbookpage.cpp \
   addresstablemodel.cpp \
   askpassphrasedialog.cpp \
-  blockexplorer.cpp \
+  blockbrowser.cpp \
   coincontroldialog.cpp \
   coincontroltreewidget.cpp \
   editaddressdialog.cpp \
@@ -308,6 +308,7 @@ BITCOIN_QT_CPP += \
   overviewpage.cpp \
   paymentrequestplus.cpp \
   paymentserver.cpp \
+  qcustomplot.cpp \
   receivecoinsdialog.cpp \
   receiverequestdialog.cpp \
   recentrequeststablemodel.cpp \

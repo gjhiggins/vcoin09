@@ -16,6 +16,7 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class MiningPage;
+class BlockBrowser;
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -54,6 +55,7 @@ public:
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
+	BlockBrowser *blockBrowser;
 
     OverviewPage *overviewPage;
     QWidget *transactionsPage;
@@ -64,6 +66,10 @@ private:
     TransactionView *transactionView;
 
     QProgressDialog *progressDialog;
+
+    /** Create the main UI actions. */
+    void createActions();
+    /** Create the menu bar and sub-menus. */
 
 public slots:
     /** Switch to overview (home) page */
@@ -76,6 +82,8 @@ public slots:
     void gotoSendCoinsPage(QString addr = "");
     /** Switch to mining page */
     void gotoMiningPage();
+    /** Switch to block explorer page */
+    void gotoBlockBrowserPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

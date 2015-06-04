@@ -19,7 +19,7 @@ class RPCConsole;
 class SendCoinsRecipient;
 class WalletFrame;
 class WalletModel;
-class BlockExplorer;
+class BlockBrowser;
 class MiningPage;
 
 class CWallet;
@@ -69,7 +69,8 @@ protected:
 private:
     ClientModel *clientModel;
     WalletFrame *walletFrame;
-
+    BlockBrowser *blockBrowser;
+	
     QLabel *labelEncryptionIcon;
     QLabel *labelConnectionsIcon;
     QLabel *labelBlocksIcon;
@@ -77,6 +78,7 @@ private:
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
+	QAction *blockAction;
     QAction *overviewAction;
     QAction *historyAction;
     QAction *quitAction;
@@ -95,7 +97,6 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
-    QAction *openBlockExplorerAction;
     QAction *showHelpMessageAction;
     QAction *miningAction;
 #ifdef Q_OS_OSX
@@ -105,7 +106,6 @@ private:
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
-    BlockExplorer* blockExplorer;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;
@@ -168,6 +168,9 @@ private slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+    /** Switch to Block Browser Page */
+    void gotoBlockBrowserPage(); 
+	
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */

@@ -15,6 +15,9 @@
 #include "rpcconsole.h"
 #include "utilitydialog.h"
 #include "tradingdialog.h"
+#include "exchangebrowser.h"
+#include "chatwindow.h"
+#include "blockbrowser.h"
 #ifdef ENABLE_WALLET
 #include "walletframe.h"
 #include "walletmodel.h"
@@ -255,12 +258,31 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
+
 	tradeAction = new QAction(QIcon(":/icons/trade"), tr("&Trade"), this);
  	tradeAction->setStatusTip(tr("Trading via Bleutrade"));
 	tradeAction->setToolTip(tradeAction->statusTip());
 	tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
 	tradeAction->setCheckable(true);
 	tabGroup->addAction(tradeAction);
+
+	exchangeAction = new QAction(QIcon(":/icons/markets"), tr("&Review"), this);
+	exchangeAction->setToolTip(tr("Market Statistics"));
+	exchangeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+	exchangeAction->setCheckable(true);
+	tabGroup->addAction(exchangeAction);
+
+	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
+	chatAction->setToolTip(tr("View chat"));
+    chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
+	chatAction->setCheckable(true);
+	tabGroup->addAction(chatAction);
+
+	blockAction = new QAction(QIcon(":/icons/explorer"), tr("&Explore"), this);
+	blockAction->setToolTip(tr("Explore the Blockchain"));
+	blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
+	blockAction->setCheckable(true);
+	tabGroup->addAction(blockAction);
 
     // These showNormalIfMinimized are needed because Send Coins and Receive Coins
     // can be triggered from the tray menu, and need to show the GUI to be useful.
@@ -274,6 +296,9 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
 	connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
+	connect(exchangeAction, SIGNAL(triggered()), this, SLOT(gotoExchangeBrowserPage()));
+	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
+	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowserPage()));
 
     quitAction = new QAction(QIcon(":/icons/quit"), tr("E&xit"), this);
     quitAction->setStatusTip(tr("Quit application"));
@@ -345,6 +370,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
 	    connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
+	    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     }
 #endif
 }
@@ -386,6 +412,9 @@ void BitcoinGUI::createMenuBar()
     QMenu *network = appMenuBar->addMenu(tr("&Trading"));
     network->addAction(tradeAction);
 
+    QMenu *network = appMenuBar->addMenu(tr("&Network"));
+    network->addAction(blockAction);
+
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
     {
@@ -409,6 +438,9 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
 		toolbar->addAction(tradeAction);
+		toolbar->addAction(exchangeAction);
+		toolbar->addAction(chatAction);
+		toolbar->addAction(blockAction);
         overviewAction->setChecked(true);
     }
 }
@@ -618,6 +650,23 @@ void BitcoinGUI::gotoTradingPage()
 {
     tradeAction->setChecked(true);
     if (walletFrame) walletFrame->gotoTradingPage();
+void BitcoinGUI::gotoExchangeBrowserPage()
+{
+    exchangeAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoExchangeBrowserPage();
+}
+
+
+void BitcoinGUI::gotoChatPage()
+{
+    chatAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoChatPage();
+}
+
+void BitcoinGUI::gotoBlockBrowserPage()
+{
+    blockAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoBlockBrowserPage();
 }
 
 void BitcoinGUI::gotoSendCoinsPage(QString addr)

@@ -22,6 +22,8 @@
 #define DECORATION_SIZE 64
 #define NUM_ITEMS 3
 
+extern json_spirit::Value GetNetworkHashPS(int lookup, int height);
+
 class TxViewDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
@@ -129,27 +131,27 @@ OverviewPage::OverviewPage(QWidget *parent) :
     {
         // setup Plot
         // create graph
-        ui->diffplot->addGraph();
+        ui->hashplot->addGraph();
 
         // Use usual background
-        ui->diffplot->setBackground(QBrush(QWidget::palette().color(this->backgroundRole())));
+        ui->hashplot->setBackground(QBrush(QWidget::palette().color(this->backgroundRole())));
 
         // give the axes some labels:
-        ui->diffplot->xAxis->setLabel(tr("Blocks"));
-        ui->diffplot->yAxis->setLabel(tr("Difficulty"));
+        ui->hashplot->xAxis->setLabel(tr("Blocks"));
+        ui->hashplot->yAxis->setLabel(tr("NethashPS"));
 
         // set the pens
-        ui->diffplot->graph(0)->setPen(QPen(QColor(5, 168, 162)));
-        ui->diffplot->graph(0)->setLineStyle(QCPGraph::lsLine);
+        ui->hashplot->graph(0)->setPen(QPen(QColor(5, 168, 162)));
+        ui->hashplot->graph(0)->setLineStyle(QCPGraph::lsLine);
 
         // set axes label fonts:
         QFont label = font();
-        ui->diffplot->xAxis->setLabelFont(label);
-        ui->diffplot->yAxis->setLabelFont(label);
+        ui->hashplot->xAxis->setLabelFont(label);
+        ui->hashplot->yAxis->setLabelFont(label);
     }
     else
     {
-        ui->diffplot->setVisible(false);
+        ui->hashplot->setVisible(false);
     }
 }
 
@@ -162,8 +164,8 @@ void OverviewPage::updatePlot(int count)
 
     // if(fDebug) { printf("Plot: Getting Ready: pidnexBest: %p\n", pindexBest); }
 
-    int numLookBack = 2000;
-    double diffMax = 0;
+    int numLookBack = 4320;
+    int64_t hashMax = 0;
     CBlockIndex* pindex = chainActive.Tip();
     int height = chainActive.Height();
     int xStart = std::max<int>(height-numLookBack, 0) + 1;
@@ -189,8 +191,8 @@ void OverviewPage::updatePlot(int count)
     {
         if(fDebug) { printf("Plot: Processing block: %d - pprev: %p\n", itr->nHeight, itr->pprev); }
         vX[i] = itr->nHeight;
-        vY[i] = GetDifficulty(itr);
-        diffMax = std::max<double>(diffMax, vY[i]);
+        vY[i] = GetNetworkHashPS(120, vX[i]).get_int64();
+        hashMax = std::max<int64_t>(hashMax, vY[i]);
 
         itr = itr->pprev;
         i--;
@@ -199,18 +201,18 @@ void OverviewPage::updatePlot(int count)
 
     if(fDebug) { printf("Plot: Drawing plot\n"); }
 
-    ui->diffplot->graph(0)->setData(vX, vY);
+    ui->hashplot->graph(0)->setData(vX, vY);
 
     // set axes ranges, so we see all data:
-    ui->diffplot->xAxis->setRange((double)xStart, (double)xEnd);
-    ui->diffplot->yAxis->setRange(0, diffMax+(diffMax/10));
+    ui->hashplot->xAxis->setRange((double)xStart, (double)xEnd);
+    ui->hashplot->yAxis->setRange(0, hashMax+(hashMax/10));
 
-    ui->diffplot->xAxis->setAutoSubTicks(false);
-    ui->diffplot->yAxis->setAutoSubTicks(false);
-    ui->diffplot->xAxis->setSubTickCount(0);
-    ui->diffplot->yAxis->setSubTickCount(0);
+    ui->hashplot->xAxis->setAutoSubTicks(false);
+    ui->hashplot->yAxis->setAutoSubTicks(false);
+    ui->hashplot->xAxis->setSubTickCount(0);
+    ui->hashplot->yAxis->setSubTickCount(0);
 
-    ui->diffplot->replot();
+    ui->hashplot->replot();
 
     if(fDebug) { printf("Plot: Done!\n"); }
 }

@@ -243,34 +243,35 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     receiveCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_3));
     tabGroup->addAction(receiveCoinsAction);
 
-    historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
+    historyAction = new QAction(QIcon(":/icons/history"), tr("&Transx"), this);
     historyAction->setStatusTip(tr("Browse transaction history"));
     historyAction->setToolTip(historyAction->statusTip());
     historyAction->setCheckable(true);
     historyAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_4));
     tabGroup->addAction(historyAction);
 
-    miningAction = new QAction(QIcon(":/icons/tx_mined2"), tr("&Mining"), this);
-    miningAction->setStatusTip(tr("Mine new Dropcoin"));
+    miningAction = new QAction(QIcon(":/icons/tx_mined2"), tr("&Mine"), this);
+    miningAction->setStatusTip(tr("Mine new VCoin"));
     miningAction->setToolTip(miningAction->statusTip());
     miningAction->setCheckable(true);
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
-	exchangeAction = new QAction(QIcon(":/icons/markets"), tr("&Market Data"), this);
-	exchangeAction->setToolTip(tr("Market"));
-	exchangeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
+	exchangeAction = new QAction(QIcon(":/icons/markets"), tr("&Review"), this);
+	exchangeAction->setToolTip(tr("Market Statistics"));
+	exchangeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
 	exchangeAction->setCheckable(true);
 	tabGroup->addAction(exchangeAction);
 
 	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
 	chatAction->setToolTip(tr("View chat"));
+    chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
 	chatAction->setCheckable(true);
 	tabGroup->addAction(chatAction);
 
-	blockAction = new QAction(QIcon(":/icons/explorer"), tr("&Chain"), this);
-	blockAction->setToolTip(tr("Blockchain"));
-	blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
+	blockAction = new QAction(QIcon(":/icons/explorer"), tr("&Explore"), this);
+	blockAction->setToolTip(tr("Explore the Blockchain"));
+	blockAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_8));
 	blockAction->setCheckable(true);
 	tabGroup->addAction(blockAction);
 

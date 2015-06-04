@@ -19,8 +19,8 @@ const QString apiCoinbasePrice = "http://www.bitstamp.net/api/ticker/";
 
 //Bittrex API
 const QString apiBittrexMarketSummary = "http://bittrex.com/api/v1.1/public/getmarketsummaries";
-const QString apiBittrexTrades = "http://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-VCN&count=100";
-const QString apiBittrexOrders = "http://bittrex.com/api/v1.1/public/getorderbook?market=BTC-VCN&type=both&depth=50";
+const QString apiBittrexTrades = "http://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-DGC&count=100";
+const QString apiBittrexOrders = "http://bittrex.com/api/v1.1/public/getorderbook?market=BTC-DGC&type=both&depth=50";
 
 //Common Globals
 int mode=1;

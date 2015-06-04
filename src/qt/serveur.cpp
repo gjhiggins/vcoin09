@@ -60,7 +60,7 @@ void Serveur::connected()
 
 void Serveur::joins()
 {
-    join("#digitalcoin");
+    join("#vcoin");
 }
 
 void Serveur::readServeur()

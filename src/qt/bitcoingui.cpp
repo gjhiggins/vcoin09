@@ -342,7 +342,6 @@ void BitcoinGUI::createActions(bool fIsTestnet)
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
-	    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     }
 #endif
 }

@@ -28,7 +28,7 @@
         <x>10</x>
         <y>10</y>
         <width>770</width>
-        <height>480</height>
+        <height>470</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -127,7 +127,7 @@
         <x>0</x>
         <y>0</y>
         <width>770</width>
-        <height>480</height>
+        <height>470</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -222,7 +222,7 @@
   </layout>
   <action name="actionQuit">
    <property name="text">
-    <string>Quitter</string>
+    <string>Quit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -230,11 +230,13 @@
   </action>
   <action name="actionCloseTab">
    <property name="text">
-    <string>Fermer l'onglet</string>
+    <string>Close tab</string>
    </property>
   </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../bitcoin.qrc"/>
+ </resources>
  <connections/>
 </ui>

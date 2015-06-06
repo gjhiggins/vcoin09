@@ -63,13 +63,13 @@ public:
             hashGenesisBlock = genesis.GetHash();
         }
 
-        genesis.print();
-        */
-        
         printf("mainnet: %s\n", hashGenesisBlock.ToString().c_str());
         printf("mainnet: %s\n", genesis.hashMerkleRoot.ToString().c_str());
         printf("mainnet: %x\n", bnProofOfWorkLimit.GetCompact());
+        genesis.print();
 
+        */
+        
         assert(hashGenesisBlock == uint256("0x00000b7e804f0de87e7752550ff04d7686a4599509897feefd7f03904eb45633"));
         assert(genesis.hashMerkleRoot == uint256("0x1576ef41775095b26a8f8f2bb65b693ec12230608a425aa84ee462381cae00e6"));
 
@@ -126,11 +126,13 @@ public:
         vAlertPubKey = ParseHex("");
         nDefaultPort = 55534;
         nRPCPort = 55535;
+        bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20);
         strDataDir = "testnet3";
 
         // Modify the testnet genesis block so the timestamp is valid for a later start.
-        genesis.nTime = 1374901773;
-        genesis.nNonce = 1211565;
+        genesis.nTime = 1374901774;
+        genesis.nBits = bnProofOfWorkLimit.GetCompact();
+        genesis.nNonce = 243324;
 
         //// debug print
         hashGenesisBlock = genesis.GetHash();
@@ -140,16 +142,14 @@ public:
         //   hashGenesisBlock = genesis.GetHash();
         //}
 
-        LogPrintf("%s\n", hashGenesisBlock.ToString().c_str());
-        LogPrintf("%s\n", genesis.hashMerkleRoot.ToString().c_str());
-        genesis.print();
-        */
-
         printf("testnet: %s\n", hashGenesisBlock.ToString().c_str());
         printf("testnet: %s\n", genesis.hashMerkleRoot.ToString().c_str());
         printf("testnet: %x\n", bnProofOfWorkLimit.GetCompact());
+        genesis.print();
 
-        assert(hashGenesisBlock == uint256("0xaeccc338155a7316d0e207471f45dd61c13c07e8a1b36056798975710bb35fc7"));
+        */
+
+        assert(hashGenesisBlock == uint256("0x0000031225834a1423f72fc7f8371e46b0ed172da9a9242edb891902abb85759"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -193,14 +193,12 @@ public:
         //    hashGenesisBlock = genesis.GetHash();
         //}
 
-        LogPrintf("%s\n", hashGenesisBlock.ToString().c_str());
-        LogPrintf("%s\n", genesis.hashMerkleRoot.ToString().c_str());
-        genesis.print();
-        */
-
         printf("regtest: %s\n", hashGenesisBlock.ToString().c_str());
         printf("regtest: %s\n", genesis.hashMerkleRoot.ToString().c_str());
         printf("regtest: %x\n", bnProofOfWorkLimit.GetCompact());
+        genesis.print();
+
+        */
 
         // assert(hashGenesisBlock == uint256(""));
 

@@ -34,7 +34,7 @@
 
 WalletView::WalletView(QWidget *parent):
     QStackedWidget(parent),
-    gui(_gui),
+    // gui(_gui),
     clientModel(0),
     walletModel(0)
 {
@@ -68,7 +68,7 @@ WalletView::WalletView(QWidget *parent):
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
     miningPage = new MiningPage();
-    tradingPage = new tradingDialog(gui);
+    // tradingPage = new tradingDialog(gui);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);

@@ -174,8 +174,7 @@ QString tradingDialog::GetNonce()
     // There must be a better way, lol.
     QString str = "";
     QDateTime currentDateTime = QDateTime::currentDateTime();
-    QTime currentTime = currentDateTime.time();
-    int nonce = currentTime.msecsSinceStartOfDay();
+    int nonce = currentDateTime.currentMSecsSinceEpoch() - 14399999999999; // 3785342360
     QString Response = str.number(nonce,'i',8);
     int sPos = Response.indexOf(".");
     Response.remove(sPos,sizeof(Response));
@@ -288,6 +287,7 @@ QString tradingDialog::GetBalance(QString Currency)
             URL += tradingDialog::GetNonce(),
             URL += "&currency=";
             URL += Currency;
+    // QMessageBox::information(this,"URL",URL);
 
     QString Response = sendRequest(URL);
      return dequote(Response);
@@ -864,6 +864,9 @@ void tradingDialog::on_UpdateKeys_clicked()
     this->ApiKey    = "6e99c70a58efc512d0112ea9d5c250ce";
     this->SecretKey = "1a32713f3582eb974a5c5787a6f78697";
     this->Currency = "VCN";
+
+
+    /*
     QString Balance = GetBalance(this->Currency).toUtf8();
     QJsonDocument jsonResponse = QJsonDocument::fromJson(GetBalance(this->Currency).toUtf8()); //get json from str.
     QJsonObject ResponseObject = jsonResponse.object();                                 //get json obj
@@ -872,11 +875,20 @@ void tradingDialog::on_UpdateKeys_clicked()
     QString istrue = "true";
 
     if ( rstatus == isfalse)
+    */
+    // QJsonDocument jsonResponse = QJsonDocument::fromJson(GetAccountHistory().toUtf8()); //get json from str.
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(GetBalance(this->Currency).toUtf8()); //get json from str.
+    QJsonObject ResponseObject = jsonResponse.object();                                 //get json obj
+    // QString Balance = GetBalance(this->Currency).toUtf8();
+    // QMessageBox::information(this,"Response",Balance);
+
+   if ( ResponseObject.value("success").toBool() == false)
+
     {
         QMessageBox::information(this,"API Configuration Failed","Api configuration was unsuccesful.");
 
     }
-    else if ( rstatus == istrue)
+    else if ( ResponseObject.value("success").toBool() == true)
     {
          QMessageBox::information(this,"API Configuration Complete" ,"Api connection has been successfully configured and tested.");
          ui->ApiKeyInput->setEchoMode(QLineEdit::Password);

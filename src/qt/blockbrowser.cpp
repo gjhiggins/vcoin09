@@ -318,7 +318,7 @@ double getTxFees(std::string txid)
         ssTx << wtxPrev;
         const CScript target = wtxPrev.vout[vin.prevout.n].scriptPubKey;
         swp = convertCoins(getInputValue(wtxPrev, target));
-        buffer0 = value0 + convertCoins(getInputValue(wtxPrev, target));
+        buffer0 = value0 + swp;
         value0 = buffer0;
     }
 

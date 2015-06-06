@@ -9,6 +9,9 @@ src/vcoind
 src/vcoin-cli
 src/test/test_vcoin
 src/qt/test/test_vcoin-qt
+src/qt/test/test_bitcoin-qt
+src/test/test_bitcoin
+
 
 Makefile.in
 aclocal.m4
@@ -60,6 +63,7 @@ VCoin-Qt.app
 # Unit-tests
 Makefile.test
 vcoin-qt_test
+Makefile.am.user
 
 # Resources cpp
 qrc_*.cpp

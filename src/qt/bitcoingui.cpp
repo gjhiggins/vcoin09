@@ -15,7 +15,6 @@
 #include "rpcconsole.h"
 #include "utilitydialog.h"
 #include "tradingdialog.h"
-#include "exchangebrowser.h"
 #include "chatwindow.h"
 #include "blockbrowser.h"
 #ifdef ENABLE_WALLET
@@ -258,19 +257,12 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
-
 	tradeAction = new QAction(QIcon(":/icons/trade"), tr("&Trade"), this);
  	tradeAction->setStatusTip(tr("Trading via Bleutrade"));
 	tradeAction->setToolTip(tradeAction->statusTip());
 	tradeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
 	tradeAction->setCheckable(true);
 	tabGroup->addAction(tradeAction);
-
-	exchangeAction = new QAction(QIcon(":/icons/markets"), tr("&Review"), this);
-	exchangeAction->setToolTip(tr("Market Statistics"));
-	exchangeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
-	exchangeAction->setCheckable(true);
-	tabGroup->addAction(exchangeAction);
 
 	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
 	chatAction->setToolTip(tr("View chat"));
@@ -296,7 +288,6 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
 	connect(tradeAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
-	connect(exchangeAction, SIGNAL(triggered()), this, SLOT(gotoExchangeBrowserPage()));
 	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
 	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowserPage()));
 
@@ -438,7 +429,6 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
 		toolbar->addAction(tradeAction);
-		toolbar->addAction(exchangeAction);
 		toolbar->addAction(chatAction);
 		toolbar->addAction(blockAction);
         overviewAction->setChecked(true);
@@ -651,13 +641,6 @@ void BitcoinGUI::gotoTradingPage()
     tradeAction->setChecked(true);
     if (walletFrame) walletFrame->gotoTradingPage();
 }
-
-void BitcoinGUI::gotoExchangeBrowserPage()
-{
-    exchangeAction->setChecked(true);
-    if (walletFrame) walletFrame->gotoExchangeBrowserPage();
-}
-
 
 void BitcoinGUI::gotoChatPage()
 {

@@ -17,7 +17,6 @@ class TransactionView;
 class WalletModel;
 class MiningPage;
 class tradingDialog;
-class ExchangeBrowser;
 class ChatWindow;
 class BlockBrowser;
 
@@ -58,7 +57,6 @@ public:
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
-	ExchangeBrowser *exchangeBrowser;
 	ChatWindow *chatWindow;
 	BlockBrowser *blockBrowser;
 
@@ -84,8 +82,6 @@ public slots:
     void gotoHistoryPage();
     /** Switch to trading page */
     void gotoTradingPage();	
-    /** Switch to exchange browser page */
-    void gotoExchangeBrowserPage();	
     /** Switch to chat page */
     void gotoChatPage();
     /** Switch to receive coins page */

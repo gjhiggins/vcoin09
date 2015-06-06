@@ -92,7 +92,6 @@ QT_FORMS_UI = \
   forms/blockbrowser.ui \
   forms/coincontroldialog.ui \
   forms/editaddressdialog.ui \
-  forms/exchangebrowser.ui \
   forms/helpmessagedialog.ui \
   forms/intro.ui \
   forms/miningpage.ui \
@@ -124,7 +123,6 @@ QT_MOC_CPP = \
   moc_csvmodelwriter.cpp \
   moc_editaddressdialog.cpp \
   moc_tradingdialog.cpp \
-  moc_exchangebrowser.cpp \
   moc_guiutil.cpp \
   moc_intro.cpp \
   moc_macdockiconhandler.cpp \
@@ -192,7 +190,6 @@ BITCOIN_QT_H = \
   coincontroltreewidget.h \
   csvmodelwriter.h \
   editaddressdialog.h \
-  exchangebrowser.h \
   guiconstants.h \
   guiutil.h \
   intro.h \
@@ -265,7 +262,6 @@ RES_ICONS = \
   res/icons/lock_closed.png \
   res/icons/lock_open.png \
   res/icons/trade.png \
-  res/icons/markets.png \
   res/icons/mining.png \
   res/icons/mining_active.png \
   res/icons/mining_inactive.png \
@@ -297,7 +293,6 @@ BITCOIN_QT_CPP = \
   blockbrowser.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
-  exchangebrowser.cpp \
   guiutil.cpp \
   intro.cpp \
   monitoreddatamapper.cpp \

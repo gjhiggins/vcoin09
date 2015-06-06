@@ -24,6 +24,7 @@
 
 extern json_spirit::Value GetNetworkHashPS(int lookup, int height);
 
+
 class TxViewDelegate : public QAbstractItemDelegate
 {
     Q_OBJECT
@@ -248,12 +249,13 @@ void OverviewPage::setBalance(qint64 balance, qint64 unconfirmedBalance, qint64 
 
 void OverviewPage::setClientModel(ClientModel *model)
 {
+    bool fTestNet = GetBoolArg("-testnet", false);
     this->clientModel = model;
     if(model)
     {
         // Show warning if this is a prerelease version
         connect(model, SIGNAL(alertsChanged(QString)), this, SLOT(updateAlerts(QString)));
-        updateAlerts(model->getStatusBarWarnings());
+        updateAlerts(fTestNet? "This is testnet" : model->getStatusBarWarnings());
     }
 }
 

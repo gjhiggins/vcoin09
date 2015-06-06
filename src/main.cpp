@@ -2982,6 +2982,55 @@ bool LoadBlockIndex()
     return true;
 }
 
+void static VCoinGenesisMiner(CBlock block, int start, int threads)
+{
+    LogPrintf("VCoinMiner started\n");
+    SetThreadPriority(THREAD_PRIORITY_LOWEST);
+    RenameThread("bitmark-miner");
+    block.nTime += start;
+    try { while (true) {
+        printf("Searching for genesis block...\n");
+        uint256 hashTarget = Params().ProofOfWorkLimit().getuint256();
+        while (block.GetHash() > hashTarget)
+        {
+            ++block.nNonce;
+            if (block.nNonce == 0)
+            {
+                printf("NONCE WRAPPED, incrementing time");
+                ++block.nTime;
+            }
+        }
+        printf("block.nTime = %u \n", block.nTime);
+        printf("block.nNonce = %u \n", block.nNonce);
+        printf("block.GetHash = %s\n", block.GetHash().ToString().c_str());
+    } }
+    catch (boost::thread_interrupted)
+    {
+        LogPrintf("VCoinMiner terminated\n");
+        throw;
+    }
+}
+
+void GenesisVCoin(CBlock block)
+{
+    static boost::thread_group* minerThreads = NULL;
+
+    int nThreads = boost::thread::hardware_concurrency();
+
+    if (minerThreads != NULL)
+    {
+        minerThreads->interrupt_all();
+        delete minerThreads;
+        minerThreads = NULL;
+    }
+
+    if (nThreads == 0)
+        return;
+
+    minerThreads = new boost::thread_group();
+    for (int i = 0; i < nThreads; i++)
+        minerThreads->create_thread(boost::bind(&VCoinGenesisMiner, block, i, nThreads));
+}
 
 bool InitBlockIndex() {
     LOCK(cs_main);
@@ -2996,6 +3045,14 @@ bool InitBlockIndex() {
 
     // Only add the genesis block if not reindexing (in which case we reuse the one already on disk)
     if (!fReindex) {
+        // Generate a new Genesis block
+		if (false)
+		{
+			CBlock &block = const_cast<CBlock&>(Params().GenesisBlock());
+			GenesisVCoin(block);
+	        block.print();
+	        while(true) {}
+		}
         try {
             CBlock &block = const_cast<CBlock&>(Params().GenesisBlock());
             // Start new block file

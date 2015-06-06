@@ -14,7 +14,6 @@
 #include "optionsmodel.h"
 #include "rpcconsole.h"
 #include "utilitydialog.h"
-#include "exchangebrowser.h"
 #include "chatwindow.h"
 #include "blockbrowser.h"
 #ifdef ENABLE_WALLET
@@ -257,12 +256,6 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
-	exchangeAction = new QAction(QIcon(":/icons/markets"), tr("&Review"), this);
-	exchangeAction->setToolTip(tr("Market Statistics"));
-	exchangeAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_6));
-	exchangeAction->setCheckable(true);
-	tabGroup->addAction(exchangeAction);
-
 	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
 	chatAction->setToolTip(tr("View chat"));
     chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
@@ -286,7 +279,6 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
-	connect(exchangeAction, SIGNAL(triggered()), this, SLOT(gotoExchangeBrowserPage()));
 	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
 	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowserPage()));
 
@@ -423,7 +415,6 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
-		toolbar->addAction(exchangeAction);
 		toolbar->addAction(chatAction);
 		toolbar->addAction(blockAction);
         overviewAction->setChecked(true);
@@ -630,13 +621,6 @@ void BitcoinGUI::gotoMiningPage()
     miningAction->setChecked(true);
     if (walletFrame) walletFrame->gotoMiningPage();
 }
-
-void BitcoinGUI::gotoExchangeBrowserPage()
-{
-    exchangeAction->setChecked(true);
-    if (walletFrame) walletFrame->gotoExchangeBrowserPage();
-}
-
 
 void BitcoinGUI::gotoChatPage()
 {

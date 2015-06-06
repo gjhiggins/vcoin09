@@ -16,7 +16,6 @@ class SendCoinsRecipient;
 class TransactionView;
 class WalletModel;
 class MiningPage;
-class ExchangeBrowser;
 class ChatWindow;
 class BlockBrowser;
 
@@ -57,7 +56,6 @@ public:
 private:
     ClientModel *clientModel;
     WalletModel *walletModel;
-	ExchangeBrowser *exchangeBrowser;
 	ChatWindow *chatWindow;
 	BlockBrowser *blockBrowser;
 
@@ -80,8 +78,6 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
-    /** Switch to exchange browser page */
-    void gotoExchangeBrowserPage();	
     /** Switch to chat page */
     void gotoChatPage();
     /** Switch to receive coins page */

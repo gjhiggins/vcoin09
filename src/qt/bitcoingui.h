@@ -16,7 +16,7 @@
 class ClientModel;
 class Notificator;
 class RPCConsole;
-class TradingPage;
+class tradingDialog;
 class ChatWindow;
 class SendCoinsRecipient;
 class WalletFrame;
@@ -71,7 +71,6 @@ protected:
 private:
     ClientModel *clientModel;
     WalletFrame *walletFrame;
-    TradingPage *tradingPage;
     BlockBrowser *blockBrowser;
 	
     QLabel *labelEncryptionIcon;
@@ -81,7 +80,6 @@ private:
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
-	QAction *tradeAction;
 	QAction *chatAction;
 	QAction *blockAction;
     QAction *overviewAction;
@@ -102,6 +100,7 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
+	QAction *openTradingwindowAction;
     QAction *showHelpMessageAction;
     QAction *miningAction;
 #ifdef Q_OS_OSX
@@ -111,6 +110,7 @@ private:
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
+    tradingDialog  *tradingWindow;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;

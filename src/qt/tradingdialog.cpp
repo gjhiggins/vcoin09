@@ -65,15 +65,15 @@ tradingDialog::tradingDialog(QWidget *parent) :
 
 
     /*OrderBook Table Init*/
-    CreateOrderBookTables(*ui->BidsTable,QStringList() << "TOTAL(BTC)"<< "VCN(SIZE)" << "BID(BTC)");
-    CreateOrderBookTables(*ui->AsksTable,QStringList() << "ASK(BTC)"  << "VCN(SIZE)" << "TOTAL(BTC)");
+    CreateOrderBookTables(*ui->BidsTable,QStringList() << "Total(BTC)"<< "VCN(SIZE)" << "Bid(BTC)");
+    CreateOrderBookTables(*ui->AsksTable,QStringList() << "Ask(BTC)"  << "VCN(SIZE)" << "Total(BTC)");
     /*OrderBook Table Init*/
 
     /*Market History Table Init*/
     ui->MarketHistoryTable->setColumnCount(5);
     ui->MarketHistoryTable->verticalHeader()->setVisible(false);
 
-    ui->MarketHistoryTable->setHorizontalHeaderLabels(QStringList()<<"DATE"<<"BUY/SELL"<<"BID/ASK"<<"TOTAL UNITS(VCN)"<<"TOTAL COST(BTC");
+    ui->MarketHistoryTable->setHorizontalHeaderLabels(QStringList()<<"Date"<<"Buy/Sell"<<"Bid/Ask"<<"Total units(VCN)"<<"Total cost(BTC");
     ui->MarketHistoryTable->setRowCount(0);
 
     int Cellwidth =  ui->MarketHistoryTable->width() / 5;
@@ -665,7 +665,7 @@ void tradingDialog::ParseAndPopulateMarketHistoryTable(QString Response)
             ui->MarketHistoryTable->setItem(itteration, 2, new QTableWidgetItem(str.number(obj["Price"].toDouble(),'i',8)));
             ui->MarketHistoryTable->setItem(itteration, 3, new QTableWidgetItem(str.number(obj["Quantity"].toDouble(),'i',8)));
             ui->MarketHistoryTable->setItem(itteration, 4, new QTableWidgetItem(str.number(obj["Total"].toDouble(),'i',8)));
-            ui->MarketHistoryTable->item(itteration,1)->setBackgroundColor((obj["OrderType"] == QStringLiteral("BUY")) ? (QColor (150, 191, 70,255)) : ( QColor (201, 119, 153,255)));
+            ui->MarketHistoryTable->item(itteration,1)->setBackgroundColor((obj["OrderType"] == QStringLiteral("BUY")) ? (QColor (0, 205, 0, 127)) : ( QColor (255, 99, 71, 127)));
             itteration++;
         }
        obj.empty();

@@ -35,7 +35,7 @@
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>6</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="BuyTab">
     <attribute name="title">
@@ -46,12 +46,16 @@
       <rect>
        <x>30</x>
        <y>330</y>
-       <width>75</width>
+       <width>100</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>Buy VNC</string>
+      <string>Buy VCN</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../bitcoin.qrc">
+       <normaloff>:/icons/vcoin</normaloff>:/icons/vcoin</iconset>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -219,7 +223,7 @@
       </font>
      </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="layoutWidget1">
      <property name="geometry">
       <rect>
        <x>21</x>
@@ -688,7 +692,7 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="layoutWidge2">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -1160,6 +1164,22 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="label_24">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>260</y>
+       <width>281</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../bitcoin.qrc">:/images/bleutrade</pixmap>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="SellTab">
     <attribute name="title">
@@ -1335,15 +1355,19 @@
       <rect>
        <x>30</x>
        <y>330</y>
-       <width>75</width>
+       <width>100</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
       <string>Sell VCN</string>
      </property>
+     <property name="icon">
+      <iconset resource="../bitcoin.qrc">
+       <normaloff>:/icons/vcoin</normaloff>:/icons/vcoin</iconset>
+     </property>
     </widget>
-    <widget class="QWidget" name="layoutWidget">
+    <widget class="QWidget" name="layoutWidget3">
      <property name="geometry">
       <rect>
        <x>22</x>
@@ -2284,6 +2308,22 @@
       </item>
      </layout>
     </widget>
+    <widget class="QLabel" name="label_23">
+     <property name="geometry">
+      <rect>
+       <x>410</x>
+       <y>260</y>
+       <width>281</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../bitcoin.qrc">:/images/bleutrade</pixmap>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="OrderBook">
     <attribute name="title">
@@ -2712,6 +2752,10 @@
      <property name="text">
       <string>Generate VCoin Deposit Address</string>
      </property>
+     <property name="icon">
+      <iconset resource="../bitcoin.qrc">
+       <normaloff>:/icons/vcoin</normaloff>:/icons/vcoin</iconset>
+     </property>
     </widget>
     <widget class="QLabel" name="DepositAddressLabel">
      <property name="geometry">
@@ -2802,48 +2846,68 @@
       <set>Qt::LinksAccessibleByMouse|Qt::TextSelectableByKeyboard|Qt::TextSelectableByMouse</set>
      </property>
     </widget>
-   </widget>
-   <widget class="QWidget" name="ApiSettings">
-    <attribute name="title">
-     <string>Settings</string>
-    </attribute>
-    <widget class="QLineEdit" name="ApiKeyInput">
+    <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>50</y>
-       <width>481</width>
-       <height>23</height>
+       <x>410</x>
+       <y>260</y>
+       <width>281</width>
+       <height>81</height>
       </rect>
      </property>
      <property name="text">
       <string/>
      </property>
+     <property name="pixmap">
+      <pixmap resource="../bitcoin.qrc">:/images/bleutrade</pixmap>
+     </property>
     </widget>
-    <widget class="QLabel" name="label">
+   </widget>
+   <widget class="QWidget" name="ApiSettings">
+    <attribute name="title">
+     <string>Settings</string>
+    </attribute>
+    <widget class="QLabel" name="bleutrade">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>90</y>
-       <width>91</width>
-       <height>20</height>
+       <x>410</x>
+       <y>260</y>
+       <width>281</width>
+       <height>81</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
+     <property name="styleSheet">
+      <string notr="true">opacity:0.4</string>
      </property>
      <property name="text">
-      <string>Secret Key</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../bitcoin.qrc">:/images/bleutrade</pixmap>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="UpdateKeys">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>140</y>
+       <width>191</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Update API Keys</string>
+     </property>
+     <property name="icon">
+      <iconset resource="../bitcoin.qrc">
+       <normaloff>:/icons/vcoin</normaloff>:/icons/vcoin</iconset>
      </property>
     </widget>
     <widget class="QLabel" name="label_2">
      <property name="geometry">
       <rect>
-       <x>30</x>
-       <y>50</y>
+       <x>50</x>
+       <y>60</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -2861,110 +2925,136 @@
     <widget class="QLineEdit" name="SecretKeyInput">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>90</y>
-       <width>481</width>
+       <x>160</x>
+       <y>100</y>
+       <width>501</width>
        <height>23</height>
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="UpdateKeys">
+    <widget class="QLineEdit" name="ApiKeyInput">
      <property name="geometry">
       <rect>
-       <x>200</x>
-       <y>130</y>
-       <width>191</width>
+       <x>160</x>
+       <y>60</y>
+       <width>501</width>
        <height>23</height>
       </rect>
      </property>
      <property name="text">
-      <string>Update API Keys</string>
+      <string/>
      </property>
     </widget>
-    <zorder>label</zorder>
-    <zorder>ApiKeyInput</zorder>
-    <zorder>label_2</zorder>
-    <zorder>SecretKeyInput</zorder>
-    <zorder>UpdateKeys</zorder>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>100</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>Secret Key</string>
+     </property>
+    </widget>
    </widget>
   </widget>
-  <widget class="QLabel" name="Bid">
+  <widget class="QWidget" name="widget" native="true">
    <property name="geometry">
     <rect>
-     <x>11</x>
-     <y>11</y>
-     <width>151</width>
-     <height>16</height>
+     <x>10</x>
+     <y>0</y>
+     <width>761</width>
+     <height>34</height>
     </rect>
    </property>
-   <property name="minimumSize">
-    <size>
-     <width>151</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>0.00000000</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="volumet">
-   <property name="geometry">
-    <rect>
-     <x>532</x>
-     <y>11</y>
-     <width>201</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>201</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>0.000000000</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="Ask">
-   <property name="geometry">
-    <rect>
-     <x>168</x>
-     <y>11</y>
-     <width>181</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>181</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>0.00000000</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="volumebtc">
-   <property name="geometry">
-    <rect>
-     <x>355</x>
-     <y>11</y>
-     <width>171</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>171</width>
-     <height>0</height>
-    </size>
-   </property>
-   <property name="text">
-    <string>0.00000000</string>
-   </property>
+   <widget class="QLabel" name="Bid">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>10</y>
+      <width>151</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>151</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>0.00000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="volumet">
+    <property name="geometry">
+     <rect>
+      <x>520</x>
+      <y>10</y>
+      <width>201</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>201</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>0.000000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="Ask">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>10</y>
+      <width>181</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>181</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>0.00000000</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="volumebtc">
+    <property name="geometry">
+     <rect>
+      <x>340</x>
+      <y>10</y>
+      <width>171</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>171</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="text">
+     <string>0.00000000</string>
+    </property>
+   </widget>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../bitcoin.qrc"/>
+ </resources>
  <connections/>
 </ui>

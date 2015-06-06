@@ -54,8 +54,9 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
-	/** Switch to exchange browser page */
+	/** Switch to trading page */
     void gotoTradingPage();	
+	/** Switch to exchange browser page */
     void gotoExchangeBrowserPage();	
 	/** Switch to chat page */
     void gotoChatPage();

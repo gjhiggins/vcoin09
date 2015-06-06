@@ -409,8 +409,8 @@ void BitcoinGUI::createMenuBar()
     }
     settings->addAction(optionsAction);
 
-    QMenu *network = appMenuBar->addMenu(tr("&Trading"));
-    network->addAction(tradeAction);
+    QMenu *trading = appMenuBar->addMenu(tr("&Trading"));
+    trading->addAction(tradeAction);
 
     QMenu *network = appMenuBar->addMenu(tr("&Network"));
     network->addAction(blockAction);
@@ -650,6 +650,8 @@ void BitcoinGUI::gotoTradingPage()
 {
     tradeAction->setChecked(true);
     if (walletFrame) walletFrame->gotoTradingPage();
+}
+
 void BitcoinGUI::gotoExchangeBrowserPage()
 {
     exchangeAction->setChecked(true);

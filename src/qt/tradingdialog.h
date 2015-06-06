@@ -48,11 +48,11 @@ private slots:
     void on_BuyBidcomboBox_currentIndexChanged(const QString &arg1);
     void on_UnitsInput_textChanged(const QString &arg1);
     void on_BuyBidPriceEdit_textChanged(const QString &arg1);
-    void on_BuySPR_clicked();
-    void on_SellSPRBTN_clicked();
+    void on_BuyVCN_clicked();
+    void on_SellVCNBTN_clicked();
     void on_SellBidcomboBox_currentIndexChanged(const QString &arg1);
     void on_Sell_Max_Amount_clicked();
-    void on_UnitsInputSPR_textChanged(const QString &arg1);
+    void on_UnitsInputVCN_textChanged(const QString &arg1);
     void on_SellBidPriceEdit_textChanged(const QString &arg1);
     void on_AdvancedView_stateChanged(int arg1);
 
@@ -60,8 +60,8 @@ private slots:
 
     QString BittrexTimeStampToReadable(QString DateTime);
     QString CancelOrder(QString Orderid);
-    QString BuySPR(QString OrderType, double Quantity, double Rate);
-    QString SellSPR(QString OrderType, double Quantity, double Rate);
+    QString BuyVCN(QString OrderType, double Quantity, double Rate);
+    QString SellVCN(QString OrderType, double Quantity, double Rate);
     QString GetMarketHistory();
     QString GetMarketSummary();
     QString GetOrderBook();
@@ -69,6 +69,7 @@ private slots:
     QString GetAccountHistory();
     QString GetBalance(QString Currency);
     QString GetDepositAddress();
+    QString GetNonce();
     QString HMAC_SHA512_SIGNER(QString UrlToSign,QString Secretkey);
     QString sendRequest(QString url);
     QJsonObject GetResultObjectFromJSONObject(QString response);
@@ -85,6 +86,7 @@ private:
     QTimer *timer;
     QString ApiKey;
     QString SecretKey;
+    QString Currency;
     WalletModel *model;
 
 

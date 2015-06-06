@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>849</width>
+    <width>780</width>
     <height>480</height>
    </rect>
   </property>
@@ -21,7 +21,7 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>831</width>
+     <width>761</width>
      <height>431</height>
     </rect>
    </property>
@@ -35,13 +35,13 @@
     <enum>QTabWidget::North</enum>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>6</number>
    </property>
    <widget class="QWidget" name="BuyTab">
     <attribute name="title">
      <string>Buy</string>
     </attribute>
-    <widget class="QPushButton" name="BuySPR">
+    <widget class="QPushButton" name="BuyVNC">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -51,7 +51,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Buy SPR</string>
+      <string>Buy VNC</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_3">
@@ -76,7 +76,7 @@
     <widget class="QLineEdit" name="UnitsInput">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>310</x>
        <y>110</y>
        <width>441</width>
        <height>23</height>
@@ -93,7 +93,7 @@
     <widget class="QLineEdit" name="BuyBidPriceEdit">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>310</x>
        <y>140</y>
        <width>441</width>
        <height>23</height>
@@ -174,7 +174,7 @@
     <widget class="QPushButton" name="Buy_Max_Amount">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>110</y>
        <width>191</width>
        <height>23</height>
@@ -192,7 +192,7 @@
     <widget class="QComboBox" name="BuyBidcomboBox">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>140</y>
        <width>191</width>
        <height>23</height>
@@ -207,7 +207,7 @@
     <widget class="QComboBox" name="buyOrdertypeCombo">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>170</y>
        <width>191</width>
        <height>23</height>
@@ -693,7 +693,7 @@
       <rect>
        <x>11</x>
        <y>301</y>
-       <width>258</width>
+       <width>259</width>
        <height>19</height>
       </rect>
      </property>
@@ -1181,7 +1181,7 @@
     <widget class="QComboBox" name="SellBidcomboBox">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>140</y>
        <width>191</width>
        <height>23</height>
@@ -1215,7 +1215,7 @@
     <widget class="QPushButton" name="Sell_Max_Amount">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>110</y>
        <width>191</width>
        <height>23</height>
@@ -1252,7 +1252,7 @@
     <widget class="QComboBox" name="SellOrdertypeCombo">
      <property name="geometry">
       <rect>
-       <x>129</x>
+       <x>110</x>
        <y>170</y>
        <width>191</width>
        <height>23</height>
@@ -1293,13 +1293,13 @@
       </rect>
      </property>
      <property name="text">
-      <string>SPR</string>
+      <string>VCN</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="UnitsInputSPR">
+    <widget class="QLineEdit" name="UnitsInputVCN">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>310</x>
        <y>110</y>
        <width>441</width>
        <height>23</height>
@@ -1316,7 +1316,7 @@
     <widget class="QLineEdit" name="SellBidPriceEdit">
      <property name="geometry">
       <rect>
-       <x>330</x>
+       <x>310</x>
        <y>140</y>
        <width>441</width>
        <height>23</height>
@@ -1330,7 +1330,7 @@
       </font>
      </property>
     </widget>
-    <widget class="QPushButton" name="SellSPRBTN">
+    <widget class="QPushButton" name="SellVCNBTN">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -1340,7 +1340,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Sell SPR</string>
+      <string>Sell VCN</string>
      </property>
     </widget>
     <widget class="QWidget" name="layoutWidget">
@@ -1348,7 +1348,7 @@
       <rect>
        <x>22</x>
        <y>12</y>
-       <width>237</width>
+       <width>240</width>
        <height>19</height>
       </rect>
      </property>
@@ -1362,12 +1362,12 @@
          </font>
         </property>
         <property name="text">
-         <string>SPR Available:</string>
+         <string>VCN Available:</string>
         </property>
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="SPRAvailableLabel">
+       <widget class="QLabel" name="VCNAvailableLabel">
         <property name="palette">
          <palette>
           <active>
@@ -1798,7 +1798,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLabel" name="labelSPR">
+       <widget class="QLabel" name="labelVCN">
         <property name="font">
          <font>
           <weight>75</weight>
@@ -1806,7 +1806,7 @@
          </font>
         </property>
         <property name="text">
-         <string> SPR</string>
+         <string>VCN</string>
         </property>
        </widget>
       </item>
@@ -2292,9 +2292,9 @@
     <widget class="QTableWidget" name="BidsTable">
      <property name="geometry">
       <rect>
-       <x>10</x>
+       <x>12</x>
        <y>60</y>
-       <width>391</width>
+       <width>350</width>
        <height>321</height>
       </rect>
      </property>
@@ -2309,9 +2309,9 @@
     <widget class="QTableWidget" name="AsksTable">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>396</x>
        <y>60</y>
-       <width>391</width>
+       <width>350</width>
        <height>321</height>
       </rect>
      </property>
@@ -2339,7 +2339,7 @@
     <widget class="QLabel" name="AsksCount">
      <property name="geometry">
       <rect>
-       <x>420</x>
+       <x>380</x>
        <y>10</y>
        <width>91</width>
        <height>16</height>
@@ -2349,13 +2349,13 @@
       <string>Asks</string>
      </property>
     </widget>
-    <widget class="QLabel" name="SPRSupply">
+    <widget class="QLabel" name="VCNSupply">
      <property name="geometry">
       <rect>
        <x>570</x>
        <y>10</y>
-       <width>241</width>
-       <height>16</height>
+       <width>150</width>
+       <height>15</height>
       </rect>
      </property>
      <property name="text">
@@ -2365,13 +2365,13 @@
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
-    <widget class="QLabel" name="SPRDemand">
+    <widget class="QLabel" name="VCNDemand">
      <property name="geometry">
       <rect>
-       <x>160</x>
+       <x>200</x>
        <y>10</y>
-       <width>241</width>
-       <height>16</height>
+       <width>150</width>
+       <height>15</height>
       </rect>
      </property>
      <property name="text">
@@ -2384,10 +2384,10 @@
     <widget class="QLabel" name="BtcDemand">
      <property name="geometry">
       <rect>
-       <x>220</x>
+       <x>200</x>
        <y>30</y>
-       <width>181</width>
-       <height>16</height>
+       <width>150</width>
+       <height>15</height>
       </rect>
      </property>
      <property name="text">
@@ -2400,10 +2400,10 @@
     <widget class="QLabel" name="BtcSupply">
      <property name="geometry">
       <rect>
-       <x>630</x>
+       <x>570</x>
        <y>30</y>
-       <width>181</width>
-       <height>16</height>
+       <width>150</width>
+       <height>15</height>
       </rect>
      </property>
      <property name="text">
@@ -2416,7 +2416,7 @@
     <widget class="Line" name="line">
      <property name="geometry">
       <rect>
-       <x>400</x>
+       <x>370</x>
        <y>60</y>
        <width>20</width>
        <height>321</height>
@@ -2436,7 +2436,7 @@
       <rect>
        <x>10</x>
        <y>10</y>
-       <width>801</width>
+       <width>740</width>
        <height>371</height>
       </rect>
      </property>
@@ -2451,7 +2451,7 @@
       <rect>
        <x>10</x>
        <y>40</y>
-       <width>801</width>
+       <width>740</width>
        <height>341</height>
       </rect>
      </property>
@@ -2479,7 +2479,7 @@
       <rect>
        <x>0</x>
        <y>10</y>
-       <width>821</width>
+       <width>751</width>
        <height>361</height>
       </rect>
      </property>
@@ -2502,7 +2502,7 @@
       <string>TextLabel</string>
      </property>
     </widget>
-    <widget class="QLabel" name="SPRBalanceLabel">
+    <widget class="QLabel" name="VCNBalanceLabel">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2531,7 +2531,7 @@
       </font>
      </property>
      <property name="text">
-      <string>SPR Balance:</string>
+      <string>VCN Balance:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_12">
@@ -2553,7 +2553,7 @@
       <string>BTC Balance:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="SPRAvailableLabel">
+    <widget class="QLabel" name="VCNAvailableLabel_2">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2582,7 +2582,7 @@
       </font>
      </property>
      <property name="text">
-      <string>SPR Available:</string>
+      <string>VCN Available:</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_14">
@@ -2601,10 +2601,10 @@
       </font>
      </property>
      <property name="text">
-      <string>SPR Pending:</string>
+      <string>VCN Pending:</string>
      </property>
     </widget>
-    <widget class="QLabel" name="SPRPendingLabel">
+    <widget class="QLabel" name="VCNPendingLabel">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -2697,7 +2697,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Bittrex SPR Deposit Address:</string>
+      <string>Bleutrade VCN Deposit Address:</string>
      </property>
     </widget>
     <widget class="QPushButton" name="GenDepositBTN">
@@ -2710,7 +2710,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>Generate SPR Coin Deposit Address</string>
+      <string>Generate VCoin Deposit Address</string>
      </property>
     </widget>
     <widget class="QLabel" name="DepositAddressLabel">

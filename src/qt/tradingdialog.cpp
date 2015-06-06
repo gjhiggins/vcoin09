@@ -20,7 +20,26 @@
 
 #include <openssl/hmac.h>
 
+#include <boost/lexical_cast.hpp>
+#include <boost/xpressive/xpressive.hpp>
+
+using namespace boost::xpressive;
 using namespace std;
+
+QString dequote(QString s) {
+    string str(s.toStdString());
+    sregex nums = sregex::compile( ":\\\"(-?\\d*(\\.\\d+))\\\"" );
+    string nm( ":$1" );
+    str = regex_replace( str, nums, nm );
+    sregex tru = sregex::compile( "\\\"true\\\"" );
+    string tr( "true" );
+    str = regex_replace( str, tru, tr );
+    sregex fal = sregex::compile( "\\\"false\\\"" );
+    string fl( "false" );
+    str = regex_replace( str, fal, fl );
+    QString res = str.c_str();
+    return res;
+}
 
 tradingDialog::tradingDialog(QWidget *parent) :
     QDialog(parent),
@@ -35,7 +54,7 @@ tradingDialog::tradingDialog(QWidget *parent) :
 
     ui->BuyCostLabel->setPalette(sample_palette);
     ui->SellCostLabel->setPalette(sample_palette);
-    ui->SPRAvailableLabel->setPalette(sample_palette);
+    ui->VCNAvailableLabel->setPalette(sample_palette);
     ui->BtcAvailableLbl_2->setPalette(sample_palette);
     //Set tabs to inactive
     ui->TradingTabWidget->setTabEnabled(0,false);
@@ -46,15 +65,15 @@ tradingDialog::tradingDialog(QWidget *parent) :
 
 
     /*OrderBook Table Init*/
-    CreateOrderBookTables(*ui->BidsTable,QStringList() << "TOTAL(BTC)"<< "SPR(SIZE)" << "BID(BTC)");
-    CreateOrderBookTables(*ui->AsksTable,QStringList() << "ASK(BTC)"  << "SPR(SIZE)" << "TOTAL(BTC)");
+    CreateOrderBookTables(*ui->BidsTable,QStringList() << "TOTAL(BTC)"<< "VCN(SIZE)" << "BID(BTC)");
+    CreateOrderBookTables(*ui->AsksTable,QStringList() << "ASK(BTC)"  << "VCN(SIZE)" << "TOTAL(BTC)");
     /*OrderBook Table Init*/
 
     /*Market History Table Init*/
     ui->MarketHistoryTable->setColumnCount(5);
     ui->MarketHistoryTable->verticalHeader()->setVisible(false);
 
-    ui->MarketHistoryTable->setHorizontalHeaderLabels(QStringList()<<"DATE"<<"BUY/SELL"<<"BID/ASK"<<"TOTAL UNITS(SPR)"<<"TOTAL COST(BTC");
+    ui->MarketHistoryTable->setHorizontalHeaderLabels(QStringList()<<"DATE"<<"BUY/SELL"<<"BID/ASK"<<"TOTAL UNITS(VCN)"<<"TOTAL COST(BTC");
     ui->MarketHistoryTable->setRowCount(0);
 
     int Cellwidth =  ui->MarketHistoryTable->width() / 5;
@@ -121,133 +140,250 @@ tradingDialog::tradingDialog(QWidget *parent) :
 }
 
 void tradingDialog::InitTrading()
-{     //todo - add internet connection/socket error checking.
+{
+    //todo - add internet connection/socket error checking.
 
     //Get default exchange info for the qlabels
     UpdaterFunction();
     // qDebug() << "Updater called";
     if (this->timerid == 0)
         {
-          //Timer is not set,lets create one.
-          this->timer = new QTimer(this);
-          connect(timer, SIGNAL(timeout()), this, SLOT(UpdaterFunction()));
-          this->timer->start(5000);
-          this->timerid = this->timer->timerId();
+            //Timer is not set,lets create one.
+            this->timer = new QTimer(this);
+            connect(timer, SIGNAL(timeout()), this, SLOT(UpdaterFunction()));
+            this->timer->start(5000);
+            this->timerid = this->timer->timerId();
         }
 }
 
-void tradingDialog::UpdaterFunction(){
-    //SPRst get the main exchange info in order to populate qLabels in maindialog. then get data
+void tradingDialog::UpdaterFunction()
+{
+    //First get the main exchange info in order to populate qLabels in maindialog. then get data
     //required for the current tab.
 
-     int Retval = SetExchangeInfoTextLabels();
+    int Retval = SetExchangeInfoTextLabels();
 
-     if (Retval == 0){
-                      ActionsOnSwitch(-1);
-                     }
+    if (Retval == 0)
+    {
+        ActionsOnSwitch(-1);
+    }
 }
 
-QString tradingDialog::GetMarketSummary(){
-
-     QString Response = sendRequest("https://bittrex.com/api/v1.1/public/GetMarketSummary?market=btc-SPR");
-     return Response;
-}
-
-QString tradingDialog::GetOrderBook(){
-
-      QString  Response = sendRequest("https://bittrex.com/api/v1.1/public/getorderbook?market=BTC-SPR&type=both&depth=50");
-      return Response;
-}
-
-QString tradingDialog::GetMarketHistory(){
-      QString Response = sendRequest("https://bittrex.com/api/v1.1/public/getmarkethistory?market=BTC-SPR&count=100");
-      return Response;
-}
-
-QString tradingDialog::CancelOrder(QString OrderId){
-
-        QString URL = "https://bittrex.com/api/v1.1/market/cancel?apikey=";
-                URL += this->ApiKey;
-                URL += "&nonce=12345434&uuid=";
-                URL += OrderId;
-
-        QString Response = sendRequest(URL);
-        return Response;
-}
-
-QString tradingDialog::BuySPR(QString OrderType, double Quantity, double Rate){
-
+QString tradingDialog::GetNonce()
+{
+    // There must be a better way, lol.
     QString str = "";
-    QString URL = "https://bittrex.com/api/v1.1/market/";
-            URL += OrderType;
-            URL += "?apikey=";
-            URL += this->ApiKey;
-            URL += "&nonce=12345434&market=BTC-SPR&quantity=";
-            URL += str.number(Quantity,'i',8);
-            URL += "&rate=";
-            URL += str.number(Rate,'i',8);
-
-    QString Response = sendRequest(URL);
+    QDateTime currentDateTime = QDateTime::currentDateTime();
+    QTime currentTime = currentDateTime.time();
+    int nonce = currentTime.msecsSinceStartOfDay();
+    QString Response = str.number(nonce,'i',8);
+    int sPos = Response.indexOf(".");
+    Response.remove(sPos,sizeof(Response));
+    // QMessageBox::information(this,"nonce:",Response);
     return Response;
 }
 
-QString tradingDialog::SellSPR(QString OrderType, double Quantity, double Rate){
+QString tradingDialog::GetMarketSummary()
+{
 
-    QString str = "";
-    QString URL = "https://bittrex.com/api/v1.1/market/";
-            URL += OrderType;
-            URL += "?apikey=";
-            URL += this->ApiKey;
-            URL += "&nonce=12345434&market=BTC-SPR&quantity=";
-            URL += str.number(Quantity,'i',8);
-            URL += "&rate=";
-            URL += str.number(Rate,'i',8);
+    /*
+        {"success":"true",
+         "message":"",
+         "result":[
+             {"MarketName":"VCN_BTC",
+              "PrevDay":"0.00000010",
+              "High":"0.00000014",
+              "Low":"0.00000010",
+              "Last":"0.00000014",
+              "Average":"0.00000012",
+              "Volume":"25182.01003446",
+              "BaseVolume":"0.00293166",
+              "TimeStamp":"2015-06-05 11:23:56",
+              "Bid":"0.00000008",
+              "Ask":"0.00000014",
+              "IsActive":"true"
+             }
+         ]
+        }
+    */
 
-    QString Response = sendRequest(URL);
-    return Response;
+    QString Response = sendRequest("https://bleutrade.com/api/v2/public/getmarketsummary?market=VCN_BTC");
+    return dequote(Response);
 }
 
-QString tradingDialog::GetOpenOrders(){
-    QString URL = "https://bittrex.com/api/v1.1/market/getopenorders?apikey=";
-            URL += this->ApiKey;
-            URL += "&nonce=12345434&market=BTC-SPR";
+QString tradingDialog::GetMarketHistory()
+{
+    /*
+    {"success":"true",
+     "message":"",
+     "result":[
+         {"TimeStamp":"2015-06-05 07:13:51",
+          "Quantity":"859.92857142",
+          "Price":"0.00000014",
+          "Total":"0.00012039",
+          "OrderType":"BUY"},
+         {"TimeStamp":"2015-06-02 19:57:31",
+          "Quantity":"5221.19923810",
+          "Price":"0.00000012",
+          "Total":"0.00062654",
+          "OrderType":"SELL"}
+       ]
+    }
+    */
 
-    QString Response = sendRequest(URL);
-    return Response;
+    QString Response = sendRequest("https://bleutrade.com/api/v2/public/getmarkethistory?market=VCN_BTC");
+    return dequote(Response);
 }
 
-QString tradingDialog::GetBalance(QString Currency){
+QString tradingDialog::GetOrderBook()
+{
+    /*
+    {"success":"true",
+     "message":"",
+     "result":
+         {"buy":[
+              {"Quantity":"20000.0","Rate":"0.0000001"},
+              {"Quantity":"14000.0","Rate":"0.00000008"},
+              {"Quantity":"14000.0","Rate":"0.00000007"},
+              {"Quantity":"20000.0","Rate":"0.00000004"},
+              {"Quantity":"4000.0","Rate":"0.00000003"},
+              {"Quantity":"178616.99999999","Rate":"0.00000002"},
+              {"Quantity":"10000.0","Rate":"0.00000001"}
+          ],
+          "sell":[
+              {"Quantity":"50573.35015995","Rate":"0.00000014"},
+              {"Quantity":"10049.60505143","Rate":"0.00000015"},
+              {"Quantity":"18247.94231398","Rate":"0.00000017"},
+              {"Quantity":"20233.34882011","Rate":"0.00000018"},
+              {"Quantity":"3187.34960345","Rate":"0.0000002"},
+              {"Quantity":"3051.52857223","Rate":"0.0000003"},
+              {"Quantity":"335.00211363","Rate":"0.00000032"},
+              {"Quantity":"335.00211363","Rate":"0.00000034"},
+              {"Quantity":"11277.50211664","Rate":"0.00000035"},
+              {"Quantity":"1232.00211363","Rate":"0.00000036"},
+              {"Quantity":"1434.00211363","Rate":"0.00000037"},
+              {"Quantity":"305.00211363","Rate":"0.00000038"},
+              {"Quantity":"305.00211363","Rate":"0.00000039"},
+              {"Quantity":"23028.83530067","Rate":"0.0000004"},
+              {"Quantity":"250.00211363","Rate":"0.00000041"},
+              {"Quantity":"250.00211363","Rate":"0.00000042"},
+              {"Quantity":"1355.39946248","Rate":"0.00000043"},
+              {"Quantity":"482.04346889","Rate":"0.00000044"},
+              {"Quantity":"250.00211363","Rate":"0.00000062"},
+              {"Quantity":"155.00211363","Rate":"0.00000065"}
+          ]
+       }
+    }
+    */
+    QString  Response = sendRequest("https://bleutrade.com/api/v2/public/getorderbook?market=VCN_BTC&type=ALL");
+    return dequote(Response);
+}
 
-    QString URL = "https://bittrex.com/api/v1.1/account/getbalance?apikey=";
+QString tradingDialog::GetBalance(QString Currency)
+{
+
+    QString URL = "https://bleutrade.com/api/v2/account/getbalance?apikey=";
             URL += this->ApiKey;
-            URL += "&nonce=12345434&currency=";
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&currency=";
             URL += Currency;
 
     QString Response = sendRequest(URL);
-     return Response;
+     return dequote(Response);
 }
 
-QString tradingDialog::GetDepositAddress(){
-
-    QString URL = "https://bittrex.com/api/v1.1/account/getdepositaddress?apikey=";
+QString tradingDialog::GetOpenOrders()
+{
+    QString URL = "https://bleutrade.com/api/v2/market/getopenorders?apikey=";
             URL += this->ApiKey;
-            URL += "&nonce=12345434&currency=SPR";
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&market=VCN_BTC";
 
     QString Response = sendRequest(URL);
-    return Response;
+    return dequote(Response);
 }
 
-QString tradingDialog::GetAccountHistory(){
+QString tradingDialog::BuyVCN(QString OrderType, double Quantity, double Rate)
+{
 
-    QString URL = "https://bittrex.com/api/v1.1/account/getorderhistory?apikey=";
+    QString str = "";
+    QString URL = "https://bleutrade.com/api/v2/market/";
+            URL += OrderType;
+            URL += "?apikey=";
             URL += this->ApiKey;
-            URL += "&nonce=12345434&market=BTC-SPR&count=10";
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&market=VCN&quantity=";
+            URL += str.number(Quantity,'i',8);
+            URL += "&rate=";
+            URL += str.number(Rate,'i',8);
 
     QString Response = sendRequest(URL);
-    return Response;
+    return dequote(Response);
 }
 
-int tradingDialog::SetExchangeInfoTextLabels(){
+QString tradingDialog::SellVCN(QString OrderType, double Quantity, double Rate)
+{
+
+    QString str = "";
+    QString URL = "https://bleutrade.com/api/v2/market/";
+            URL += OrderType;
+            URL += "?apikey=";
+            URL += this->ApiKey;
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&market=VCN&quantity=";
+            URL += str.number(Quantity,'i',8);
+            URL += "&rate=";
+            URL += str.number(Rate,'i',8);
+
+    QString Response = sendRequest(URL);
+    return dequote(Response);
+}
+
+QString tradingDialog::CancelOrder(QString OrderId)
+{
+    QString URL = "https://bleutrade.com/api/v2/market/cancel?apikey=";
+            URL += this->ApiKey;
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL +="&uuid=";
+            URL += OrderId;
+
+    QString Response = sendRequest(URL);
+    return dequote(Response);
+}
+
+QString tradingDialog::GetDepositAddress()
+{
+
+    QString URL = "https://bleutrade.com/api/v2/account/getdepositaddress?apikey=";
+            URL += this->ApiKey;
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&currency=VCN";
+
+    QString Response = sendRequest(URL);
+    return dequote(Response);
+}
+
+QString tradingDialog::GetAccountHistory()
+{
+
+    QString URL = "https://bleutrade.com/api/v2/account/getorderhistory?apikey=";
+            URL += this->ApiKey;
+            URL += "&nonce=",
+            URL += tradingDialog::GetNonce(),
+            URL += "&market=VCN_BTC";
+
+    QString Response = sendRequest(URL);
+    return dequote(Response);
+}
+
+int tradingDialog::SetExchangeInfoTextLabels()
+{
     //Get the current exchange information + information for the current open tab if required.
     QString str = "";
     QString Response = GetMarketSummary();
@@ -265,16 +401,17 @@ int tradingDialog::SetExchangeInfoTextLabels(){
 
     ui->Bid->setText("<b>Bid:</b> <span style='font-weight:bold; font-size:11px; color:Green;'>" + str.number(obj["Bid"].toDouble(),'i',8) + "</span> BTC");
 
-    ui->volumet->setText("<b>SPR Volume:</b> <span style='font-weight:bold; font-size:11px; color:blue;'>" + str.number(obj["Volume"].toDouble(),'i',8) + "</span> SPR");
+    ui->volumet->setText("<b>VCN Volume:</b> <span style='font-weight:bold; font-size:11px; color:blue;'>" + str.number(obj["Volume"].toDouble(),'i',8) + "</span> VCN");
 
     ui->volumebtc->setText("<b>BTC Volume:</b> <span style='font-weight:bold; font-size:11px; color:blue;'>" + str.number(obj["BaseVolume"].toDouble(),'i',8) + "</span> BTC");
 
     obj.empty();
 
-return 0;
- }
+    return 0;
+}
 
-void tradingDialog::CreateOrderBookTables(QTableWidget& Table,QStringList TableHeader){
+void tradingDialog::CreateOrderBookTables(QTableWidget& Table,QStringList TableHeader)
+{
 
     Table.setColumnCount(3);
     Table.verticalHeader()->setVisible(false);
@@ -294,7 +431,8 @@ void tradingDialog::CreateOrderBookTables(QTableWidget& Table,QStringList TableH
     Table.horizontalHeader()->setStyleSheet("QHeaderView::section, QHeaderView::section * { font-weight :bold;}");
 }
 
-void tradingDialog::DisplayBalance(QLabel &BalanceLabel,QLabel &Available, QLabel &Pending, QString Currency,QString Response){
+void tradingDialog::DisplayBalance(QLabel &BalanceLabel,QLabel &Available, QLabel &Pending, QString Currency,QString Response)
+{
 
     QString str;
 
@@ -310,7 +448,8 @@ void tradingDialog::DisplayBalance(QLabel &BalanceLabel,QLabel &Available, QLabe
     Pending.setText("<span style='font-weight:bold; font-size:11px; color:green'>" + str.number( ResultObject["Pending"].toDouble(),'i',8) + "</span> " +Currency);
 }
 
-void tradingDialog::ParseAndPopulateOpenOrdersTable(QString Response){
+void tradingDialog::ParseAndPopulateOpenOrdersTable(QString Response)
+{
 
     int itteration = 0, RowCount = 0;
 
@@ -361,8 +500,8 @@ void tradingDialog::ParseAndPopulateOpenOrdersTable(QString Response){
             }
 }
 
-
-void tradingDialog::CancelOrderSlot(int row, int col){
+void tradingDialog::CancelOrderSlot(int row, int col)
+{
 
    QString OrderId = ui->OpenOrdersTable->model()->data(ui->OpenOrdersTable->model()->index(row,0)).toString();
    QMessageBox::StandardButton reply;
@@ -388,7 +527,8 @@ void tradingDialog::CancelOrderSlot(int row, int col){
           }
 }
 
-void tradingDialog::ParseAndPopulateAccountHistoryTable(QString Response){
+void tradingDialog::ParseAndPopulateAccountHistoryTable(QString Response)
+{
 
     int itteration = 0, RowCount = 0;
 
@@ -432,8 +572,8 @@ void tradingDialog::ParseAndPopulateAccountHistoryTable(QString Response){
         obj.empty();
 }
 
-
-void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook){
+void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook)
+{
 
     QString str;
     QJsonObject obj;
@@ -444,8 +584,8 @@ void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook){
     QJsonArray  BuyArray  = ResultObject.value("buy").toArray();                //get buy/sell object from result object
     QJsonArray  SellArray = ResultObject.value("sell").toArray();               //get buy/sell object from result object
 
-    double SPRSupply = 0;
-    double SPRDemand = 0;
+    double VCNSupply = 0;
+    double VCNDemand = 0;
     double BtcSupply  = 0;
     double BtcDemand  = 0;
 
@@ -459,7 +599,7 @@ void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook){
         double y = obj["Quantity"].toDouble();
         double a = (x * y);
 
-        SPRSupply = SPRSupply + y;
+        VCNSupply = VCNSupply + y;
         BtcSupply  = BtcSupply  + a;
 
         AskRows = ui->AsksTable->rowCount();
@@ -481,7 +621,7 @@ void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook){
         double y = obj["Quantity"].toDouble();
         double a = (x * y);
 
-        SPRDemand = SPRDemand + y;
+        VCNDemand = VCNDemand + y;
         BtcDemand  = BtcDemand  + a;
 
         BidRows = ui->BidsTable->rowCount();
@@ -492,19 +632,19 @@ void tradingDialog::ParseAndPopulateOrderBookTables(QString OrderBook){
         BuyItteration++;
      }
 
-        ui->SPRSupply->setText("<b>Supply:</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(SPRSupply,'i',8) + "</span><b> SPR</b>");
+        ui->VCNSupply->setText("<b>Supply:</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(VCNSupply,'i',8) + "</span><b> VCN</b>");
         ui->BtcSupply->setText("<span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(BtcSupply,'i',8) + "</span><b> BTC</b>");
         ui->AsksCount->setText("<b>Ask's :</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(ui->AsksTable->rowCount()) + "</span>");
 
 
-        ui->SPRDemand->setText("<b>Demand:</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(SPRDemand,'i',8) + "</span><b> SPR</b>");
+        ui->VCNDemand->setText("<b>Demand:</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(VCNDemand,'i',8) + "</span><b> VCN</b>");
         ui->BtcDemand->setText("<span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(BtcDemand,'i',8) + "</span><b> BTC</b>");
         ui->BidsCount->setText("<b>Bid's :</b> <span style='font-weight:bold; font-size:11px; color:blue'>" + str.number(ui->BidsTable->rowCount()) + "</span>");
   obj.empty();
 }
 
-
-void tradingDialog::ParseAndPopulateMarketHistoryTable(QString Response){
+void tradingDialog::ParseAndPopulateMarketHistoryTable(QString Response)
+{
 
     int itteration = 0, RowCount = 0;
     QJsonArray    jsonArray    = GetResultArrayFromJSONObject(Response);
@@ -531,7 +671,8 @@ void tradingDialog::ParseAndPopulateMarketHistoryTable(QString Response){
        obj.empty();
 }
 
-void tradingDialog::ActionsOnSwitch(int index = -1){
+void tradingDialog::ActionsOnSwitch(int index = -1)
+{
 
     QString Response = "";
 
@@ -559,11 +700,11 @@ void tradingDialog::ActionsOnSwitch(int index = -1){
                                    Response = GetMarketSummary();
                                    if(Response.size() > 0 && Response != "Error"){
 
-                                       QString balance = GetBalance("SPR");
+                                       QString balance = GetBalance("VCN");
                                        QString str;
                                        QJsonObject ResultObject =  GetResultObjectFromJSONObject(balance);
 
-                                       ui->SPRAvailableLabel->setText(str.number(ResultObject["Available"].toDouble(),'i',8));
+                                       ui->VCNAvailableLabel->setText(str.number(ResultObject["Available"].toDouble(),'i',8));
                                      }
 
                 break;
@@ -604,10 +745,10 @@ void tradingDialog::ActionsOnSwitch(int index = -1){
                           DisplayBalance(*ui->BitcoinBalanceLabel,*ui->BitcoinAvailableLabel,*ui->BitcoinPendingLabel, QString::fromUtf8("BTC"),Response);
                          }
 
-                         Response = GetBalance("SPR");
+                         Response = GetBalance("VCN");
 
                        if(Response.size() > 0 && Response != "Error"){
-                         DisplayBalance(*ui->SPRBalanceLabel,*ui->SPRAvailableLabel,*ui->SPRPendingLabel, QString::fromUtf8("SPR"),Response);
+                         DisplayBalance(*ui->VCNBalanceLabel,*ui->VCNAvailableLabel,*ui->VCNPendingLabel, QString::fromUtf8("VCN"),Response);
                         }
                 break;
 
@@ -638,8 +779,8 @@ void tradingDialog::on_TradingTabWidget_tabBarClicked(int index)
     }
 }
 
-
-QString tradingDialog::sendRequest(QString url){
+QString tradingDialog::sendRequest(QString url)
+{
 
     QString Response = "";
     QString Secret   = this->SecretKey;
@@ -665,35 +806,37 @@ QString tradingDialog::sendRequest(QString url){
     if (reply->error() == QNetworkReply::NoError) {
         //success
         Response = reply->readAll();
+        // QMessageBox::information(this,"Success",Response);
         delete reply;
     }
     else{
         //failure
         // qDebug() << "Failure" <<reply->errorString();
         Response = "Error";
-        //QMessageBox::information(this,"Error",reply->errorString());
+        // QMessageBox::information(this,"Error",reply->errorString());
         delete reply;
         }
 
      return Response;
 }
 
-QString tradingDialog::BittrexTimeStampToReadable(QString DateTime){
-    //Seperate Time and date.
-    int TPos = DateTime.indexOf("T");
-    int sPos = DateTime.indexOf(".");
-    QDateTime Date = QDateTime::fromString(DateTime.left(TPos),"yyyy-MM-dd"); //format to convert from
-    DateTime.remove(sPos,sizeof(DateTime));
-    DateTime.remove(0,TPos+1);
-    QDateTime Time = QDateTime::fromString(DateTime.right(TPos),"hh:mm:ss");
-
+QString tradingDialog::BittrexTimeStampToReadable(QString DateTime)
+{
+    //Separate Time and date.
+    // int TPos = DateTime.indexOf("T");
+    // int sPos = DateTime.indexOf(".");
+    int _Pos = DateTime.indexOf(" ");
+    QDateTime Date = QDateTime::fromString(DateTime.left(_Pos),"yyyy-MM-dd"); //format to convert from
+    DateTime.remove(0,_Pos+1);
+    QDateTime Time = QDateTime::fromString(DateTime.right(_Pos),"hh:mm:ss");
     //Reconstruct time and date in our own format, one that QDateTime will recognise.
     QString DisplayDate = Date.toString("dd/MM/yyyy") + " " + Time.toString("hh:mm:ss A"); //formats to convert to
 
     return DisplayDate;
 }
 
-void tradingDialog::CalculateBuyCostLabel(){
+void tradingDialog::CalculateBuyCostLabel()
+{
 
     double price    = ui->BuyBidPriceEdit->text().toDouble();
     double Quantity = ui->UnitsInput->text().toDouble();
@@ -703,10 +846,11 @@ void tradingDialog::CalculateBuyCostLabel(){
     ui->BuyCostLabel->setText(Str.number(cost,'i',8));
 }
 
-void tradingDialog::CalculateSellCostLabel(){
+void tradingDialog::CalculateSellCostLabel()
+{
 
     double price    = ui->SellBidPriceEdit->text().toDouble();
-    double Quantity = ui->UnitsInputSPR->text().toDouble();
+    double Quantity = ui->UnitsInputVCN->text().toDouble();
     double cost = ((price * Quantity) - ((price * Quantity / 100) * 0.25));
 
     QString Str = "";
@@ -715,17 +859,26 @@ void tradingDialog::CalculateSellCostLabel(){
 
 void tradingDialog::on_UpdateKeys_clicked()
 {
-  this->ApiKey    = ui->ApiKeyInput->text();
-  this->SecretKey = ui->SecretKeyInput->text();
+    this->ApiKey    = ui->ApiKeyInput->text();
+    this->SecretKey = ui->SecretKeyInput->text();
+    this->ApiKey    = "6e99c70a58efc512d0112ea9d5c250ce";
+    this->SecretKey = "1a32713f3582eb974a5c5787a6f78697";
+    this->Currency = "VCN";
+    QString Balance = GetBalance(this->Currency).toUtf8();
+    QJsonDocument jsonResponse = QJsonDocument::fromJson(GetBalance(this->Currency).toUtf8()); //get json from str.
+    QJsonObject ResponseObject = jsonResponse.object();                                 //get json obj
+    QJsonValue rstatus = ResponseObject.value(QString("success"));
+    QString isfalse = "false";
+    QString istrue = "true";
 
-   QJsonDocument jsonResponse = QJsonDocument::fromJson(GetAccountHistory().toUtf8()); //get json from str.
-   QJsonObject ResponseObject = jsonResponse.object();                                 //get json obj
+    if ( rstatus == isfalse)
+    {
+        QMessageBox::information(this,"API Configuration Failed","Api configuration was unsuccesful.");
 
-  if ( ResponseObject.value("success").toBool() == false){
-       QMessageBox::information(this,"API Configuration Failed","Api configuration was unsuccesful.");
-
-  }else if ( ResponseObject.value("success").toBool() == true){
-         QMessageBox::information(this,"API Configuration Complete","Api connection has been successfully configured and tested.");
+    }
+    else if ( rstatus == istrue)
+    {
+         QMessageBox::information(this,"API Configuration Complete" ,"Api connection has been successfully configured and tested.");
          ui->ApiKeyInput->setEchoMode(QLineEdit::Password);
          ui->SecretKeyInput->setEchoMode(QLineEdit::Password);
          ui->TradingTabWidget->setTabEnabled(0,true);
@@ -745,17 +898,16 @@ void tradingDialog::on_GenDepositBTN_clicked()
     ui->DepositAddressLabel->setText(ResultObject["Address"].toString());
 }
 
-
 void tradingDialog::on_Sell_Max_Amount_clicked()
 {
-    //calculate amount of BTC that can be gained from selling SPR available balance
-    QString responseA = GetBalance("SPR");
+    //calculate amount of BTC that can be gained from selling VCN available balance
+    QString responseA = GetBalance("VCN");
     QString str;
     QJsonObject ResultObject =  GetResultObjectFromJSONObject(responseA);
 
-    double AvailableSPR = ResultObject["Available"].toDouble();
+    double AvailableVCN = ResultObject["Available"].toDouble();
 
-    ui->UnitsInputSPR->setText(str.number(AvailableSPR,'i',8));
+    ui->UnitsInputVCN->setText(str.number(AvailableVCN,'i',8));
 }
 
 void tradingDialog::on_Buy_Max_Amount_clicked()
@@ -795,17 +947,18 @@ void tradingDialog::on_buyOrdertypeCombo_activated(const QString &arg1)
                                                       }
 }
 
-
-QJsonObject tradingDialog::GetResultObjectFromJSONObject(QString response){
+QJsonObject tradingDialog::GetResultObjectFromJSONObject(QString response)
+{
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());          //get json from str.
     QJsonObject  ResponseObject = jsonResponse.object();                              //get json obj
     QJsonObject  ResultObject   = ResponseObject.value(QString("result")).toObject(); //get result object
 
-  return ResultObject;
+    return ResultObject;
 }
 
-QJsonObject tradingDialog::GetResultObjectFromJSONArray(QString response){
+QJsonObject tradingDialog::GetResultObjectFromJSONArray(QString response)
+{
 
     QJsonDocument jsonResponsea = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject   jsonObjecta   = jsonResponsea.object();
@@ -817,19 +970,21 @@ QJsonObject tradingDialog::GetResultObjectFromJSONArray(QString response){
         obj = value.toObject();
         }
 
-return obj;
+    return obj;
 }
 
-QJsonArray tradingDialog::GetResultArrayFromJSONObject(QString response){
+QJsonArray tradingDialog::GetResultArrayFromJSONObject(QString response)
+{
 
     QJsonDocument jsonResponse = QJsonDocument::fromJson(response.toUtf8());
     QJsonObject   jsonObject   = jsonResponse.object();
     QJsonArray    jsonArray    = jsonObject["result"].toArray();
 
-return jsonArray;
+    return jsonArray;
 }
 
-QString tradingDialog::HMAC_SHA512_SIGNER(QString UrlToSign, QString Secret){
+QString tradingDialog::HMAC_SHA512_SIGNER(QString UrlToSign, QString Secret)
+{
 
     QString retval = "";
 
@@ -881,7 +1036,7 @@ void tradingDialog::on_BuyBidcomboBox_currentIndexChanged(const QString &arg1)
     CalculateBuyCostLabel(); //update cost
 }
 
-void tradingDialog::on_BuySPR_clicked()
+void tradingDialog::on_BuyVCN_clicked()
 {
     double Rate;
     double Quantity;
@@ -896,7 +1051,7 @@ void tradingDialog::on_BuySPR_clicked()
 
     QString Msg = "Are you sure you want to buy ";
             Msg += ui->UnitsInput->text();
-            Msg += "SPR @ ";
+            Msg += "VCN @ ";
             Msg += ui->BuyBidPriceEdit->text();
             Msg += " BTC Each";
 
@@ -905,7 +1060,7 @@ void tradingDialog::on_BuySPR_clicked()
 
             if (reply == QMessageBox::Yes) {
 
-                QString Response =  BuySPR(Order,Quantity,Rate);
+                QString Response =  BuyVCN(Order,Quantity,Rate);
 
                 QJsonDocument jsonResponse = QJsonDocument::fromJson(Response.toUtf8());          //get json from str.
                 QJsonObject  ResponseObject = jsonResponse.object();                              //get json obj
@@ -923,13 +1078,13 @@ void tradingDialog::on_BuySPR_clicked()
                  }
 }
 
-void tradingDialog::on_SellSPRBTN_clicked()
+void tradingDialog::on_SellVCNBTN_clicked()
 {
     double Rate;
     double Quantity;
 
     Rate     = ui->SellBidPriceEdit->text().toDouble();
-    Quantity = ui->UnitsInputSPR->text().toDouble();
+    Quantity = ui->UnitsInputVCN->text().toDouble();
 
     QString OrderType = ui->SellOrdertypeCombo->currentText();
     QString Order;
@@ -937,8 +1092,8 @@ void tradingDialog::on_SellSPRBTN_clicked()
     if(OrderType == "Limit"){Order = "selllimit";}else if (OrderType == "Market"){ Order = "sellmarket";}
 
     QString Msg = "Are you sure you want to Sell ";
-            Msg += ui->UnitsInputSPR->text();
-            Msg += " SPR @ ";
+            Msg += ui->UnitsInputVCN->text();
+            Msg += " VCN @ ";
             Msg += ui->SellBidPriceEdit->text();
             Msg += " BTC Each";
 
@@ -947,7 +1102,7 @@ void tradingDialog::on_SellSPRBTN_clicked()
 
             if (reply == QMessageBox::Yes) {
 
-            QString Response =  SellSPR(Order,Quantity,Rate);
+            QString Response =  SellVCN(Order,Quantity,Rate);
             QJsonDocument jsonResponse = QJsonDocument::fromJson(Response.toUtf8());          //get json from str.
             QJsonObject  ResponseObject = jsonResponse.object();                              //get json obj
 
@@ -963,7 +1118,6 @@ void tradingDialog::on_SellSPRBTN_clicked()
       //do nothing
      }
 }
-
 
 void tradingDialog::on_AdvancedView_stateChanged(int arg1)
 {
@@ -984,7 +1138,7 @@ void tradingDialog::on_AdvancedView_stateChanged(int arg1)
           }
 }
 
-void tradingDialog::on_UnitsInputSPR_textChanged(const QString &arg1)
+void tradingDialog::on_UnitsInputVCN_textChanged(const QString &arg1)
 {
      CalculateSellCostLabel(); //update cost
 }

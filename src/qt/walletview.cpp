@@ -45,7 +45,7 @@ WalletView::WalletView(QWidget *parent):
 	//parent->setStyleSheet("#MainWindow{border-image: url(:/images/wallet) 0 0 0 0 stretch stretch;}");
     // Create tabs
     overviewPage = new OverviewPage();
-	tradingPage = new TradingDialog(this);
+	tradingPage = new tradingDialog(this);
 	exchangeBrowser = new ExchangeBrowser(this);
 	chatWindow = new ChatWindow(this);
 	blockBrowser = new BlockBrowser(this);

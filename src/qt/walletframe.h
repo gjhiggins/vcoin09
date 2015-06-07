@@ -13,6 +13,7 @@ class ClientModel;
 class SendCoinsRecipient;
 class WalletModel;
 class WalletView;
+class TradingDialog;
 class BlockBrowser;
 
 QT_BEGIN_NAMESPACE
@@ -53,6 +54,8 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+	/** Switch to trading page */
+    void gotoTradingPage();	
 	/** Switch to exchange browser page */
     void gotoChatPage();
     /** Switch to receive coins page */

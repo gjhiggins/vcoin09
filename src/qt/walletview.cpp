@@ -18,6 +18,7 @@
 #include "transactionview.h"
 #include "walletmodel.h"
 #include "miningpage.h"
+#include "tradingdialog.h"
 
 #include "ui_interface.h"
 #include "blockbrowser.h"
@@ -32,6 +33,7 @@
 
 WalletView::WalletView(QWidget *parent):
     QStackedWidget(parent),
+    // gui(_gui),
     clientModel(0),
     walletModel(0)
 {
@@ -42,6 +44,7 @@ WalletView::WalletView(QWidget *parent):
 	//parent->setStyleSheet("#MainWindow{border-image: url(:/images/wallet) 0 0 0 0 stretch stretch;}");
     // Create tabs
     overviewPage = new OverviewPage();
+	tradingPage = new tradingDialog(this);
 	chatWindow = new ChatWindow(this);
 	blockBrowser = new BlockBrowser(this);
 
@@ -63,12 +66,14 @@ WalletView::WalletView(QWidget *parent):
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
     miningPage = new MiningPage();
+    // tradingPage = new tradingDialog(gui);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
     addWidget(miningPage);
+	addWidget(tradingPage);
 	addWidget(chatWindow);
 	addWidget(blockBrowser);
 
@@ -192,6 +197,11 @@ void WalletView::gotoOverviewPage()
 void WalletView::gotoHistoryPage()
 {
     setCurrentWidget(transactionsPage);
+}
+
+void WalletView::gotoTradingPage()
+{
+    setCurrentWidget(tradingPage);
 }
 
 void WalletView::gotoChatPage()

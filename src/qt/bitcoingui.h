@@ -16,6 +16,7 @@
 class ClientModel;
 class Notificator;
 class RPCConsole;
+class tradingDialog;
 class ChatWindow;
 class SendCoinsRecipient;
 class WalletFrame;
@@ -99,6 +100,7 @@ private:
     QAction *aboutQtAction;
     QAction *openRPCConsoleAction;
     QAction *openAction;
+	QAction *openTradingwindowAction;
     QAction *showHelpMessageAction;
     QAction *miningAction;
 #ifdef Q_OS_OSX
@@ -108,6 +110,7 @@ private:
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
+    tradingDialog  *tradingWindow;
 
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;
@@ -170,6 +173,8 @@ private slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
+    /** Switch to Trading Page */
+    void gotoTradingPage(); 
 	/** Switch to chat page */
     void gotoChatPage();
     /** Switch to Block Browser Page */

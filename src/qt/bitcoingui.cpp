@@ -14,6 +14,7 @@
 #include "optionsmodel.h"
 #include "rpcconsole.h"
 #include "utilitydialog.h"
+#include "tradingdialog.h"
 #include "chatwindow.h"
 #include "blockbrowser.h"
 #ifdef ENABLE_WALLET
@@ -69,6 +70,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     trayIcon(0),
     notificator(0),
     rpcConsole(0),
+    tradingWindow(0),
     prevBlocks(0),
     spinnerFrame(0)
 {
@@ -122,6 +124,7 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
         /** Create wallet frame and make it the central widget */
         walletFrame = new WalletFrame(this);
         setCentralWidget(walletFrame);
+        tradingWindow = new tradingDialog(this);
     } else
 #endif
     {
@@ -193,6 +196,11 @@ BitcoinGUI::BitcoinGUI(bool fIsTestnet, QWidget *parent) :
     // prevents an oben debug window from becoming stuck/unusable on client shutdown
     connect(quitAction, SIGNAL(triggered()), rpcConsole, SLOT(hide()));
 
+    connect(openTradingwindowAction, SIGNAL(triggered()), tradingWindow, SLOT(show()));
+
+    // prevents an oben debug window from becoming stuck/unusable on client shutdown
+    connect(quitAction, SIGNAL(triggered()), tradingWindow, SLOT(hide()));
+
     // Install event filter to be able to catch status tip events (QEvent::StatusTip)
     this->installEventFilter(this);
 
@@ -256,6 +264,15 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     miningAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_5));
     tabGroup->addAction(miningAction);
 
+    /*
+	openTradingwindowAction = new QAction(QIcon(":/icons/trade"), tr("&Trade"), this);
+ 	openTradingwindowAction->setStatusTip(tr("Trading via Bleutrade"));
+	openTradingwindowAction->setToolTip(openTradingwindowAction->statusTip());
+	openTradingwindowAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_9));
+	openTradingwindowAction->setCheckable(true);
+	tabGroup->addAction(openTradingwindowAction);
+    */
+
 	chatAction = new QAction(QIcon(":/icons/chat"), tr("&Chat"), this);
 	chatAction->setToolTip(tr("View chat"));
     chatAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_7));
@@ -278,6 +295,8 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     connect(receiveCoinsAction, SIGNAL(triggered()), this, SLOT(gotoReceiveCoinsPage()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
+    // connect(openTradingwindowAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
+	// connect(openTradingwindowAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
 	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
 	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowserPage()));
@@ -323,6 +342,9 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
 
+    openTradingwindowAction = new QAction(QIcon(":/icons/trade"), tr("&Trading window"), this);
+    openTradingwindowAction->setStatusTip(tr("Bleutrade trading window"));
+
     usedSendingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Sending addresses..."), this);
     usedSendingAddressesAction->setStatusTip(tr("Show the list of used sending addresses and labels"));
     usedReceivingAddressesAction = new QAction(QIcon(":/icons/address-book"), tr("&Receiving addresses..."), this);
@@ -351,6 +373,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
         connect(usedSendingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedSendingAddresses()));
         connect(usedReceivingAddressesAction, SIGNAL(triggered()), walletFrame, SLOT(usedReceivingAddresses()));
         connect(openAction, SIGNAL(triggered()), this, SLOT(openClicked()));
+	    // connect(openTradingwindowAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
 	    connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowser()));
     }
 #endif
@@ -390,8 +413,13 @@ void BitcoinGUI::createMenuBar()
     }
     settings->addAction(optionsAction);
 
+    QMenu *trading = appMenuBar->addMenu(tr("&Trading"));
+    trading->addAction(openTradingwindowAction);
+
+    /*
     QMenu *network = appMenuBar->addMenu(tr("&Network"));
     network->addAction(blockAction);
+    */
 
     QMenu *help = appMenuBar->addMenu(tr("&Help"));
     if(walletFrame)
@@ -415,6 +443,7 @@ void BitcoinGUI::createToolBars()
         toolbar->addAction(receiveCoinsAction);
         toolbar->addAction(historyAction);
         toolbar->addAction(miningAction);
+		// toolbar->addAction(openTradingwindowAction);
 		toolbar->addAction(chatAction);
 		toolbar->addAction(blockAction);
         overviewAction->setChecked(true);
@@ -543,6 +572,7 @@ void BitcoinGUI::createTrayIconMenu()
     trayIconMenu->addAction(verifyMessageAction);
     trayIconMenu->addSeparator();
     trayIconMenu->addAction(optionsAction);
+    trayIconMenu->addAction(openTradingwindowAction);
     trayIconMenu->addAction(openRPCConsoleAction);
 #ifndef Q_OS_MAC // This is built-in on Mac
     trayIconMenu->addSeparator();
@@ -620,6 +650,12 @@ void BitcoinGUI::gotoMiningPage()
 {
     miningAction->setChecked(true);
     if (walletFrame) walletFrame->gotoMiningPage();
+}
+
+void BitcoinGUI::gotoTradingPage()
+{
+    openTradingwindowAction->setChecked(true);
+    if (walletFrame) walletFrame->gotoTradingPage();
 }
 
 void BitcoinGUI::gotoChatPage()

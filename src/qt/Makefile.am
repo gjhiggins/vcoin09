@@ -190,6 +190,7 @@ BITCOIN_QT_H = \
   coincontroltreewidget.h \
   csvmodelwriter.h \
   editaddressdialog.h \
+  exchangebrowser.h \
   guiconstants.h \
   guiutil.h \
   intro.h \
@@ -293,6 +294,7 @@ BITCOIN_QT_CPP = \
   blockbrowser.cpp \
   clientmodel.cpp \
   csvmodelwriter.cpp \
+  exchangebrowser.cpp \
   guiutil.cpp \
   intro.cpp \
   monitoreddatamapper.cpp \

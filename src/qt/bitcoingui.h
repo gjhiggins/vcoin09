@@ -81,6 +81,7 @@ private:
 
     QMenuBar *appMenuBar;
 	QAction *chatAction;
+	QAction *exchangeAction;
 	QAction *blockAction;
     QAction *overviewAction;
     QAction *historyAction;

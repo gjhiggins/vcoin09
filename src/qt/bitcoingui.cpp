@@ -298,6 +298,7 @@ void BitcoinGUI::createActions(bool fIsTestnet)
     // connect(openTradingwindowAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
 	// connect(openTradingwindowAction, SIGNAL(triggered()), this, SLOT(gotoTradingPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
+	connect(exchangeAction, SIGNAL(triggered()), this, SLOT(gotoExchangeBrowserPage()));
 	connect(chatAction, SIGNAL(triggered()), this, SLOT(gotoChatPage()));
 	connect(blockAction, SIGNAL(triggered()), this, SLOT(gotoBlockBrowserPage()));
 

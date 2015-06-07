@@ -190,7 +190,6 @@ BITCOIN_QT_H = \
   coincontroltreewidget.h \
   csvmodelwriter.h \
   editaddressdialog.h \
-  exchangebrowser.h \
   guiconstants.h \
   guiutil.h \
   intro.h \

@@ -18,7 +18,7 @@
 #include "ui_chatwindow.h"
 
 ChatWindow::ChatWindow(QWidget *parent)
-    : QWidget(parent), ui(new Ui::ChatWindowClass)
+    : QMainWindow(parent), ui(new Ui::ChatWindow)
 {
     ui->setupUi(this);
     // setFixedSize(780,480);
@@ -28,11 +28,11 @@ ChatWindow::ChatWindow(QWidget *parent)
 	connect(ui->buttonConnect, SIGNAL(clicked()), this, SLOT(connecte()));
 
 	connect(ui->actionQuit, SIGNAL(triggered()), this, SLOT(close()));
-    connect(ui->actionCloseTab, SIGNAL(triggered()), this, SLOT(closeTab()));
+    //connect(ui->actionCloseTab, SIGNAL(triggered()), this, SLOT(closeTab()));
 
 	connect(ui->lineEdit, SIGNAL(returnPressed()), this, SLOT(sendCommande()));
 
-    connect(ui->disconnect, SIGNAL(clicked()), this, SLOT(disconnectFromServer()));
+    connect(ui->disconnectbutton, SIGNAL(clicked()), this, SLOT(disconnectFromServer()));
     connect(ui->tab, SIGNAL(currentChanged(int)), this, SLOT(tabChanged(int)) );
     connect(ui->tab, SIGNAL(tabCloseRequested(int)), this, SLOT(tabClosing(int)) );
 
@@ -75,7 +75,7 @@ void ChatWindow::disconnectFromServer() {
     }
 
     ui->splitter->hide();
-    ui->hide3->show();
+    ui->connecttab->show();
 
 }
 
@@ -146,7 +146,7 @@ void ChatWindow::connecte()
     ui->splitter->show();
 	Serveur *serveur=new Serveur;
     QTextEdit *textEdit=new QTextEdit;
-    ui->hide3->hide();
+    ui->connecttab->hide();
 
     ui->tab->addTab(textEdit,"Console/PM");
 

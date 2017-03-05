@@ -13,8 +13,8 @@ class ClientModel;
 class SendCoinsRecipient;
 class WalletModel;
 class WalletView;
-class TradingDialog;
-class BlockBrowser;
+class ChatWindow;
+class BlockExplorer;
 
 QT_BEGIN_NAMESPACE
 class QStackedWidget;
@@ -54,18 +54,14 @@ public slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
-	/** Switch to trading page */
-    void gotoTradingPage();	
-	/** Switch to exchange browser page */
+	/** Switch to explorer page */
+    void gotoBlockExplorerPage();	
+	/** Switch to chat page */
     void gotoChatPage();
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
-    /** Switch to mining page */
-    void gotoMiningPage();
-    /** Switch to block browser page */
-    void gotoBlockBrowserPage(); 
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

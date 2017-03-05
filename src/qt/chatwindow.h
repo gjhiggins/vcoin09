@@ -22,17 +22,18 @@
 #include "clientmodel.h"
 #include "serveur.h"
 
+#include <QMainWindow>
 namespace Ui
 {
-    class ChatWindowClass;
+    class ChatWindow;
 }
 
-class ChatWindow : public QWidget
+class ChatWindow : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    ChatWindow(QWidget *parent = 0);
+    explicit ChatWindow(QWidget *parent = 0);
     ~ChatWindow();
     void setModel(ClientModel *model);
     Serveur * currentTab();
@@ -52,7 +53,7 @@ public:
         void tabClosing(int index);
 
 private:
-	Ui::ChatWindowClass *ui;
+	Ui::ChatWindow *ui;
     ClientModel *model;
     QMap<QString,Serveur *> serveurs;
 	bool joining;

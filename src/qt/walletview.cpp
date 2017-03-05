@@ -17,11 +17,9 @@
 #include "transactiontablemodel.h"
 #include "transactionview.h"
 #include "walletmodel.h"
-#include "miningpage.h"
-#include "tradingdialog.h"
+#include "blockexplorer.h"
 
 #include "ui_interface.h"
-#include "blockbrowser.h"
 
 #include <QAction>
 #include <QActionGroup>
@@ -33,7 +31,6 @@
 
 WalletView::WalletView(QWidget *parent):
     QStackedWidget(parent),
-    // gui(_gui),
     clientModel(0),
     walletModel(0)
 {
@@ -44,9 +41,8 @@ WalletView::WalletView(QWidget *parent):
 	//parent->setStyleSheet("#MainWindow{border-image: url(:/images/wallet) 0 0 0 0 stretch stretch;}");
     // Create tabs
     overviewPage = new OverviewPage();
-	tradingPage = new tradingDialog(this);
+	explorerWindow = new BlockExplorer(this);
 	chatWindow = new ChatWindow(this);
-	blockBrowser = new BlockBrowser(this);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -65,17 +61,13 @@ WalletView::WalletView(QWidget *parent):
 
     receiveCoinsPage = new ReceiveCoinsDialog();
     sendCoinsPage = new SendCoinsDialog();
-    miningPage = new MiningPage();
-    // tradingPage = new tradingDialog(gui);
 
     addWidget(overviewPage);
     addWidget(transactionsPage);
     addWidget(receiveCoinsPage);
     addWidget(sendCoinsPage);
-    addWidget(miningPage);
-	addWidget(tradingPage);
 	addWidget(chatWindow);
-	addWidget(blockBrowser);
+	addWidget(explorerWindow);
 
     // Clicking on a transaction on the overview pre-selects the transaction on the transaction history page
     connect(overviewPage, SIGNAL(transactionClicked(QModelIndex)), transactionView, SLOT(focusTransaction(QModelIndex)));
@@ -137,7 +129,7 @@ void WalletView::setClientModel(ClientModel *clientModel)
     this->clientModel = clientModel;
 
     overviewPage->setClientModel(clientModel);
-    miningPage->setClientModel(clientModel);
+    chatWindow->setModel(clientModel);
 }
 
 void WalletView::setWalletModel(WalletModel *walletModel)
@@ -150,7 +142,6 @@ void WalletView::setWalletModel(WalletModel *walletModel)
     receiveCoinsPage->setModel(walletModel);
     sendCoinsPage->setModel(walletModel);
     //chatWindow->setModel(walletModel);
-    miningPage->setWalletModel(walletModel);
 
     if (walletModel)
     {
@@ -199,19 +190,14 @@ void WalletView::gotoHistoryPage()
     setCurrentWidget(transactionsPage);
 }
 
-void WalletView::gotoTradingPage()
+void WalletView::gotoBlockExplorerPage()
 {
-    setCurrentWidget(tradingPage);
+    setCurrentWidget(explorerWindow);
 }
 
 void WalletView::gotoChatPage()
 {
     setCurrentWidget(chatWindow);
-}
-
-void WalletView::gotoBlockBrowserPage()
-{
-    setCurrentWidget(blockBrowser);
 }
 
 void WalletView::gotoReceiveCoinsPage()
@@ -225,11 +211,6 @@ void WalletView::gotoSendCoinsPage(QString addr)
 
     if (!addr.isEmpty())
         sendCoinsPage->setAddress(addr);
-}
-
-void WalletView::gotoMiningPage()
-{
-    setCurrentWidget(miningPage);
 }
 
 void WalletView::gotoSignMessageTab(QString addr)

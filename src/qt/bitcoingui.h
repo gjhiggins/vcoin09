@@ -16,13 +16,11 @@
 class ClientModel;
 class Notificator;
 class RPCConsole;
-class tradingDialog;
 class ChatWindow;
+class BlockExplorer;
 class SendCoinsRecipient;
 class WalletFrame;
 class WalletModel;
-class BlockBrowser;
-class MiningPage;
 
 class CWallet;
 
@@ -71,7 +69,6 @@ protected:
 private:
     ClientModel *clientModel;
     WalletFrame *walletFrame;
-    BlockBrowser *blockBrowser;
 	
     QLabel *labelEncryptionIcon;
     QLabel *labelConnectionsIcon;
@@ -80,8 +77,7 @@ private:
     QProgressBar *progressBar;
 
     QMenuBar *appMenuBar;
-	QAction *chatAction;
-	QAction *exchangeAction;
+	QAction *openChatWindowAction;
 	QAction *blockAction;
     QAction *overviewAction;
     QAction *historyAction;
@@ -102,6 +98,7 @@ private:
     QAction *openRPCConsoleAction;
     QAction *openAction;
 	QAction *openTradingwindowAction;
+	QAction *openBlockExplorerAction;
     QAction *showHelpMessageAction;
     QAction *miningAction;
 #ifdef Q_OS_OSX
@@ -111,8 +108,8 @@ private:
     QSystemTrayIcon *trayIcon;
     Notificator *notificator;
     RPCConsole *rpcConsole;
-    tradingDialog  *tradingWindow;
-
+    ChatWindow *chatWindow;
+    BlockExplorer  *explorerWindow;
     /** Keep track of previous number of blocks, to detect progress */
     int prevBlocks;
     int spinnerFrame;
@@ -174,19 +171,14 @@ private slots:
     void gotoOverviewPage();
     /** Switch to history (transactions) page */
     void gotoHistoryPage();
-    /** Switch to Trading Page */
-    void gotoTradingPage(); 
+    /** Switch to Explorer Page */
+    void gotoBlockExplorerPage(); 
 	/** Switch to chat page */
     void gotoChatPage();
-    /** Switch to Block Browser Page */
-    void gotoBlockBrowserPage(); 
-	
     /** Switch to receive coins page */
     void gotoReceiveCoinsPage();
     /** Switch to send coins page */
     void gotoSendCoinsPage(QString addr = "");
-    /** Switch to mining page */
-    void gotoMiningPage();
 
     /** Show Sign/Verify Message dialog and switch to sign message tab */
     void gotoSignMessageTab(QString addr = "");

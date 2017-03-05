@@ -11,8 +11,13 @@ namespace Ui {
 class BlockExplorer;
 }
 
+
 class CBlockIndex;
 class CTransaction;
+class CBlockTreeDB;
+
+std::string getexplorerBlockHash(int64_t);
+const CBlockIndex* getexplorerBlockIndex(int64_t);
 
 class BlockExplorer : public QMainWindow
 {

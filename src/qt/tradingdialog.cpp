@@ -17,6 +17,7 @@
 #include <QJsonObject>
 #include <QVariantMap>
 #include <QJsonArray>
+#include <QDateTime>
 
 #include <openssl/hmac.h>
 

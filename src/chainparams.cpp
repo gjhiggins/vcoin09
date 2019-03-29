@@ -75,12 +75,19 @@ public:
 
         vSeeds.push_back(CDNSSeedData("someaddress.com or IP addy", "someaddress.com"));
 
+#if BOOST_VERSION >= 106000
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,70);                    // VCoin addresses start with 'V'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,30);                    // VCoin script addresses start with '7'
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,96 + 128);              // VCoin private keys start with '7' or 'V'
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 pubkeys start with 'drkv'
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 prvkeys start with 'drkp'
+#else
         base58Prefixes[PUBKEY_ADDRESS] = list_of(70);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(30);
         base58Prefixes[SECRET_KEY]     = list_of(224);
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x88)(0xB2)(0x1E);
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x88)(0xAD)(0xE4);
-
+#endif
         // Convert the pnSeeds array into usable address objects.
         for (unsigned int i = 0; i < ARRAYLEN(pnSeed); i++)
         {
@@ -155,11 +162,19 @@ public:
         vSeeds.clear();
         // vSeeds.push_back(CDNSSeedData("vcoin.test", "test.vcoin.org"));
 
+#if BOOST_VERSION >= 106000
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,130);                    // VCoin addresses start with 'V'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,30);                    // VCoin script addresses start with '7'
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,111 + 128);              // VCoin private keys start with '7' or 'V'
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 pubkeys start with 'drkv'
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 prvkeys start with 'drkp'
+#else
         base58Prefixes[PUBKEY_ADDRESS] = list_of(130);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(30);
         base58Prefixes[SECRET_KEY]     = list_of(239);
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x35)(0x87)(0xCF);
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x35)(0x83)(0x94);
+#endif
     }
     virtual Network NetworkID() const { return CChainParams::TESTNET; }
 };
@@ -204,11 +219,19 @@ public:
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
 
+#if BOOST_VERSION >= 106000
+        base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,0);                    // VCoin addresses start with 'V'
+        base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,5);                    // VCoin script addresses start with '7'
+        base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,128);              // VCoin private keys start with '7' or 'V'
+        base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 pubkeys start with 'drkv'
+        base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >(); // Chaincoin BIP32 prvkeys start with 'drkp'
+#else
         base58Prefixes[PUBKEY_ADDRESS] = list_of(0);
         base58Prefixes[SCRIPT_ADDRESS] = list_of(5);
         base58Prefixes[SECRET_KEY]     = list_of(128);
         base58Prefixes[EXT_PUBLIC_KEY] = list_of(0x04)(0x35)(0x87)(0xCF);
         base58Prefixes[EXT_SECRET_KEY] = list_of(0x04)(0x35)(0x83)(0x94);
+#endif
     }
 
     virtual bool RequireRPCPassword() const { return false; }

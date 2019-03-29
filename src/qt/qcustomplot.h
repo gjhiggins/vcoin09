@@ -164,7 +164,7 @@ Q_DECLARE_FLAGS(Interactions, Interaction)
 */
 inline bool isInvalidData(double value)
 {
-  return isnan(value) || isinf(value);
+  return std::isnan(value) || std::isinf(value);
 }
 
 /*! \internal

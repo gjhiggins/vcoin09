@@ -186,11 +186,9 @@ void OverviewPage::updatePlot(int count)
        }
     }
 
-    if(fDebug) { printf("Plot: Reading blockchain\n"); }
     CBlockIndex* itr = pindex;
     while(i >= 0 && itr != NULL)
     {
-        if(fDebug) { printf("Plot: Processing block: %d - pprev: %p\n", itr->nHeight, itr->pprev); }
         vX[i] = itr->nHeight;
         vY[i] = GetNetworkHashPS(120, vX[i]).get_int64();
         hashMax = std::max<int64_t>(hashMax, vY[i]);
@@ -200,7 +198,6 @@ void OverviewPage::updatePlot(int count)
         x--;
     }
 
-    if(fDebug) { printf("Plot: Drawing plot\n"); }
 
     ui->hashplot->graph(0)->setData(vX, vY);
 
@@ -215,7 +212,6 @@ void OverviewPage::updatePlot(int count)
 
     ui->hashplot->replot();
 
-    if(fDebug) { printf("Plot: Done!\n"); }
 }
 
 void OverviewPage::handleTransactionClicked(const QModelIndex &index)

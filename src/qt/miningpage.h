@@ -93,7 +93,7 @@ private:
     Ui::MiningPage *ui;
     WalletModel *walletmodel;
     ClientModel *clientmodel;
-    std::auto_ptr<WalletModel::UnlockContext> unlockContext;
+    std::unique_ptr<WalletModel::UnlockContext> unlockContext;
 
     void resetMiningButton();
     void logShareCounts();

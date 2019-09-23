@@ -73,7 +73,7 @@ public:
         assert(hashGenesisBlock == uint256("0x00000b7e804f0de87e7752550ff04d7686a4599509897feefd7f03904eb45633"));
         assert(genesis.hashMerkleRoot == uint256("0x1576ef41775095b26a8f8f2bb65b693ec12230608a425aa84ee462381cae00e6"));
 
-        vSeeds.push_back(CDNSSeedData("someaddress.com or IP addy", "someaddress.com"));
+        vSeeds.push_back(CDNSSeedData("minkiz", "minkiz.co"));
 
 #if BOOST_VERSION >= 106000
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,70);                    // VCoin addresses start with 'V'
@@ -160,7 +160,7 @@ public:
 
         vFixedSeeds.clear();
         vSeeds.clear();
-        // vSeeds.push_back(CDNSSeedData("vcoin.test", "test.vcoin.org"));
+        vSeeds.push_back(CDNSSeedData("minkiz", "minkiz.co"));
 
 #if BOOST_VERSION >= 106000
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,130);                    // VCoin addresses start with 'V'

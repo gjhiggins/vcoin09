@@ -1956,6 +1956,7 @@ void static UpdateTip(CBlockIndex *pindexNew) {
                 ++nUpgraded;
             pindex = pindex->pprev;
         }
+        LogPrintf("SetBestChain: upgraded = %d (%d/%d)\n", nUpgraded, pindex->nVersion, (int)CBlock::CURRENT_VERSION);
         if (nUpgraded > 0)
             LogPrintf("SetBestChain: %d of last 100 blocks above version %d\n", nUpgraded, (int)CBlock::CURRENT_VERSION);
         if (nUpgraded > 100/2)
